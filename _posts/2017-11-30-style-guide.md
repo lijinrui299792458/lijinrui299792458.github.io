@@ -1,9 +1,9 @@
 ---
 layout: post
-cover: 'assets/images/avatar.jpg'
+cover: 'assets/images/radhakrishna.jpg'
 title: Style Guide
 date: 2018-3-7 19:30:00
-tags: guide
+tags: Guide
 author: YunLambert
 ---
 
@@ -41,7 +41,7 @@ author: YunLambert
 
 <h3>Image</h3>
 
-<amp-img src="{{ site.baseurl }}assets/images/background.jpg" width="656" height="400" layout="responsive" alt="" class="mb3"></amp-img>
+<amp-img src="{{ site.baseurl }}assets/images/radhakrishna.jpg" width="656" height="400" layout="responsive" alt="" class="mb3"></amp-img>
 
 <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 
