@@ -2,21 +2,21 @@
 title: YunLambert
 description: Talk is cheap, show me the code.
 cover: assets/images/radhakrishna.jpg
-logo: assets/images/avatar.jpg
-favicon: assets/images/avatar.jpg
-baseurl: "/hanuman/" # the subpath of your site, e.g. /blog/ or / for root
-url: "http://www.cnblogs.com/yunlambert/" # the base hostname & protocol for your site
+#logo: assets/images/avatar.jpg
+#favicon: assets/images/avatar.jpg
+baseurl: "/" # the subpath of your site, e.g. /blog/ or / for root
+url: "http://www.cnblogs.com/yunlambert" # the base hostname & protocol for your site
 paginate:	5 # The number of posts to show per page on your homepage
 
 # Social
-facebook: facebook
-twitter: twitter
-github:  github
+facebook: yunlambert
+twitter: yunlambert
+github:  yunlambert
 
 #Additional Pages
-about: about
-contact: contact
-privacy-policy: privacy-policy
+about: ／
+contact: ／
+privacy-policy: ／
 
 
 permalink: /:title
@@ -44,7 +44,7 @@ branch: master #branch
 relative_source: ../hanuman/ #source directory
 destination: ../hanuman-pages/ #destination directory
 production_url:  https://samanyougarg.com/
-source_url:  https://github.com/samanyougarg/hanuman #source repository url
+source_url:  https://github.com/yunlambert #source repository url
 
 exclude:
   - README.md
