@@ -2,7 +2,7 @@
 layout:     post
 title:      Rails中的Active Record
 subtitle:   Rails应用系列第二篇
-date:       2019-04-25
+date:       2019-04-27
 author:     YunLambert
 header-img: img/post-bg-rails2.png
 catalog: true
@@ -169,7 +169,19 @@ validates :email, uniqueness: true, on: :create
 ```
 
 ### Scopes作用域
-在这里需要提一下scope，他将常用的查询条件进行了宣告，让程序变的干净易读，还可以串接使用。
+在这里需要提一下scope，将常用的查询条件进行了宣告，让程序变的干净易读，还可以串接使用。`-> {...}`是Ruby语法，等同于`Proc.new{...}`或`lambda{...}`，用来建立一个匿名方法。比如说我们编写event这个模型:
+```ruby
+class Event < ApplicationRecord
+    scope :open_public, -> { where( :is_public => true ) }
+    scope :recent_three_days, -> { where(["created_at > ? ", Time.now - 3.days ]) }
+end
+```
+然后我们的查询方式就可以为`Event.new.open_public.recent_three_days`。
+
+scope同时也接受参数，例如
+```ruby
+scope :recent, ->(date) { where("created_at > ?", date) }
+```
 
 
 ### 迁移
@@ -221,7 +233,7 @@ class ChangeProductsPrice < ActiveRecord::Migration[5.0]
       t.change :price, :string
     end
   end
- 
+
   def down
     change_table :products do |t|
       t.change :price, :integer
@@ -235,11 +247,11 @@ up 和 down 方法以传统风格编写迁移而不使用 change 方法。up 方
 ```ruby
 
 require_relative 'timestamp_example_migration'
- 
+
 class FixupExampleMigration < ActiveRecord::Migration[5.0]
   def change
     revert ExampleMigration
- 
+
     create_table(:apples) do |t|
       t.string :variety
     end
@@ -268,7 +280,7 @@ class DontUseConstraintForZipcodeValidationMigration < ActiveRecord::Migration[5
           SQL
         end
       end
- 
+
       # ExampleMigration 中的其他操作无需撤销
     end
   end
@@ -291,19 +303,127 @@ $ bin/rails db:migrate:redo STEP=3
 这些 rails 任务可以完成的操作，通过 db:migrate 也都能完成，区别在于这些任务使用起来更方便，无需显式指定迁移的版本。
 
 ### 关联
-首先参照[文档](https://ruby-china.github.io/rails-guides/association_basics.html)
-有个口诀：有Foreign Key的Model，就是设定belongs_to的Model。在attendees资料表上有个event_id的Foreign Key。
+首先参照[文档](https://ruby-china.github.io/rails-guides/association_basics.html)整体理解一下关联有哪些类型以及为什么用关联。(这些文档只要看到能用的地方就行了，并不用完全看完。)
+![image.png](https://upload-images.jianshu.io/upload_images/7154520-5e4305c4f3683aaa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+然后我们以一对多关联one-to-many进行讲解：一个event拥有很多attendee，在这里如何确定`belongs_to`是谁属于谁呢？在这里有个口诀：**有Foreign Key的Model，就是设定belongs_to的Model。在attendees资料表上有个event_id的Foreign Key。**
+
+所以它们的关系为：
+```ruby
+class Event < ApplicationRecord
+    has_many :attendees # 复数
+end
+
+class Attendee < ApplicationRecord
+    belongs_to :event # 单数
+end
+```
+现在就可以做一些操作:
+
+建立Attendee对象并关联到Event：
+```ruby
+e = Event.first
+a = Attendee.new( :name => 'ihower', :event => e )
+# 或 a = Attendee.new( :name => 'ihower', :event_id => e.id )
+a.save
+e.attendees # 这是hash
+e.attendees.size
+Attendee.first.event
+```
+
+从Event对象中建立一个Attendee:
+```ruby
+e = Event.first
+a = e.attendees.build( :name => 'ihower' )
+a.save
+e.attendees
+```
+
+从Event对象中建立一个Attendee，并直接存进数据库:
+```ruby
+e = Event.first
+a = e.attendees.create( :name => 'ihower' )
+e.attendees
+```
+
+先建立Attendee对象再放到Event中
+```ruby
+e = Event.first
+a = Attendee.create( :name => 'ihower' )
+e.attendees << a
+e.attendees
+```
+
+根据特定的Event查询Attendee
+```ruby
+e = Event.first
+e.id # 1
+a = e.attendees.find(3)
+attendees = e.attendees.where( :name => 'ihower' )
+```
+
+删除event下的attendee
+```ruby
+e = Event.first
+e.attendees.destroy_all # 一笔一笔删除 e 的 attendee，并触发 attendee 的 destroy 回呼
+e.attendees.delete_all # 一次砍掉 e 的所有 attendees，不会触发个别 attendee 的 destroy 回呼
+```
 
 ### 回调:参与监控过程
 Active Record控制着模型对象的生命周期，首先是创建，然后是监控修改过程，接着是保存和更新，最后是销毁。
 
 Active Record通过回调是的我们能参与到这个监控过程，编写相关代码，在对象生命周期中的某些时刻调用。通过回调，我们可以执行复杂的验证，可以把用户需要存储的值映射为自定义类型，甚至可以禁止某些操作。回调的方法可以参考[这篇文档](https://ruby-china.github.io/rails-guides/active_record_callbacks.html)
 回调主要在查询、读取、更新和销毁对象中时刻调用。同一个回可以关联多个处理程序，正常情况下处理程序按照关联的顺序调用，如果有处理程序你会false，回调链随即中止。
-据一个可以用到回调的例子，保存密码的时候需要使用加密的方法，所以在保存到模型/数据库内之前需要调用`before_save ：encrypter`进行机密然后保存到数据库。
+据一个可以用到回调的例子，保存密码的时候需要使用加密的方法，所以在保存到模型/数据库内之前需要调用`before_save ：encrypter`进行加密然后保存到数据库。
 
 ## ActiveRecord的N+1查询问题
 原文在[https://www.speedshop.co/2019/01/10/three-activerecord-mistakes.html](https://www.speedshop.co/2019/01/10/three-activerecord-mistakes.html)
-结合自己的理解进行翻译一下：
+结合自己的理解稍微说一下：
+
+正因为ActiveRecord帮我们封装好了很多东西，所以往往会忽视数据库里真实的SQL查询。ActiveRecord 的许多功能的性能消耗意味着我们不能忽略那些不必要的开销，或是仅仅把我们的 ORM 看做一个实现细节。我们需要了解到底哪些查询影响了性能表现。
+
+在Rails应用中使用Active Record可能造成很多不必要的查询，比如说:`count`,`where`,`present?`。在这里"不必要的查询"是指在一张数据表里出现了多条查询:
+大多数查询的执行都应该是在一个 action 的 response 的前半段 (during the first half of a controller action’s response)，基本上不会在 partial 里面。在 partial 里面执行的查询通常都不是有意的，而且经常都是 N+1。如果你注意在开发环境下看日志的话，这些在一个 controller 执行的时候很容易发现。比如，如果你看到长这样的：
+```
+User Load (0.6ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 2]]
+Rendered posts/_post.html.erb (23.2ms)
+User Load (0.3ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 3]]
+Rendered posts/_post.html.erb (15.1ms)
+```
+开发时应该关注如下点：
+
+1. .count executes a COUNT every time
+
+2. .where means filtering is done by the database
+
+3. any?, exists? and present?
+对于所说的N+1问题，举个例子：
+```ruby
+class Post < ApplicationRecord
+  has_many :comments
+end
+
+class Comment < ApplicationRecord
+  belongs_to :post
+end
+```
+假设数据库里有4个post，则查询的时候会出现：
+```
+> Post.count
+(0.1ms)  SELECT COUNT(*) FROM "posts"
+=> 4
+```
+获取每个post的所有comment，我们可以：
+```
+> Post.all.map{|post| post.comments}
+  Post Load (0.3ms)  SELECT "posts".* FROM "posts"v
+  Comment Load (0.2ms)  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = ?  [["post_id", 1]]
+  Comment Load (0.4ms)  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = ?  [["post_id", 2]]
+  Comment Load (0.6ms)  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = ?  [["post_id", 3]]
+  Comment Load (0.6ms)  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = ?  [["post_id", 4]]
+```
+为了查看4条post数据，却要执行N+1=5次查询，一般用Bullet这个gem包进行解决。
+
+这篇文章里主要还是很多基础的概念，不过我们只需要知道active record是一个ORM，我们借助它能更好的利用rails操作数据库，但是需要关注数据库的查询语句是否高效。下一篇路由篇里也会有很多概念。
 
 
 
