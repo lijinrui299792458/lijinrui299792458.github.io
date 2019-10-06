@@ -1,145 +1,468 @@
----
-layout: page
-title: "About"
-description: "Bro,this is YunLambert."
-header-img: "img/post-bg-coffee.jpeg"
----
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- Language Selector -->
-<!-- <select class="sel-lang" onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0" selected> 中文 Chinese </option>
-    <option value="1"> 英文 English </option>
-</select> -->
+<head>
+  <title>YunLambert</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/main.bundle.css">
+  <script src="https://kit.fontawesome.com/4e5a72c756.js"></script>
+</head>
 
-<!-- Chinese Version -->
-<div class="zh post-container">
+<body>
+  <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <div class="navbar-item is-hidden-desktop">
+          <a href="https://github.com/yunlambert" class="icon is-large has-text-light">
+            <i class="fab fa-2x fa-github"></i>
+          </a>
+        </div>
 
-    <!--copied from markdown -->
-    <blockquote><p>Talk is cheap<br>
-    Show me the code.</p></blockquote>
-
-    <p>您好，我是<strong>YunLambert</strong>，一名正在学习的不合格程序员</p>
-
-    <p>技术栈为C++与Python，会音乐、爱健身、喜欢摄影、擅长各种后期的90后男生。</p>
-
-    <p></p>
-    
-    <h5>Talks</h5>
-
-    <ul>
-        <li><a href="https://github.com">GitHub</a></li>
-        <li><a href="http://jekyll.com.cn/">jekyll</a></li>
-        <li><a href="http://huangxuan.me/">Hux</a></li> 
-        <li><a href="https://analytics.google.com/analytics">Google Analytics</a></li>
-    </ul>
-</div>
-
-<!-- English Version -->
-<!-- <div class="en post-container">
-    <blockquote><p>Yet another iOS Developer. <br>
-    Yet another Life-long Student.</p></blockquote>
-
-    <p>Hi, I am <strong>Baiying Qiu</strong>，you can call me <strong>BY</strong>. I am an iOS software engineer and currently working in Xiamen</p>
-
-    <p>This is my personal blog, through making Github Pages and Jekyll.My GitHub  👉 <a href="http://github.com/qiubaiying">Github·BY</a>.</p>
-    
-    <p>I am a sports enthusiast, I like fitness, running and boxing.</p>
-
-    <h5>Talks</h5>
-
-    <ul>
-    <li><a href="https://github.com">GitHub</a></li>
-    <li><a href="http://jekyll.com.cn/">jekyll</a></li>
-    <li><a href="https://pages.github.com/">GitHub Pages</a></li>
-    <li><a href="https://qiubaiying.github.io">BY</a></li>
-    </ul>
-</div> -->
-
-<!-- Handle Language Change -->
-<script type="text/javascript">
-    // get nodes
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    var $select = document.querySelector("select");
-
-    // bind hashchange event
-    window.addEventListener('hashchange', _render);
-
-    // handle render
-    function _render(){
-        var _hash = window.location.hash;
-        // en
-        if(_hash == "#en"){
-            $select.selectedIndex = 1;
-            $en.style.display = "block";
-            $zh.style.display = "none";
-        // zh by default
-        }else{
-            // not trigger onChange, otherwise cause a loop call.
-            $select.selectedIndex = 0;
-            $zh.style.display = "block";
-            $en.style.display = "none";
-        }
-    }
-
-    // handle select change
-    function onLanChange(index){
-        if(index == 0){
-            window.location.hash = "#zh"
-        }else{
-            window.location.hash = "#en"
-        }
-    }
-
-    // init
-    _render();
-</script>
-
-
-<!-- Gitalk 评论 start  -->
-{% if site.gitalk.enable %}
-<!-- Gitalk link  -->
-<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
-
-<div id="gitalk-container"></div>
-    <script type="text/javascript">
-    var gitalk = new Gitalk({
-    clientID: '{{site.gitalk.clientID}}',
-    clientSecret: '{{site.gitalk.clientSecret}}',
-    repo: '{{site.gitalk.repo}}',
-    owner: '{{site.gitalk.owner}}',
-    admin: ['{{site.gitalk.admin}}'],
-    distractionFreeMode: {{site.gitalk.distractionFreeMode}},
-    id: 'about',
-    });
-    gitalk.render('gitalk-container');
-</script>
-{% endif %}
-<!-- Gitalk end -->
-
- <!-- disqus 评论框 start  -->
-{% if site.disqus.enable %}
-
-<div class="comment">
-    <div id="disqus_thread" class="disqus-thread">
     </div>
-</div>
-<!-- disqus 评论框 end -->
+    <div class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <a href="https://github.com/yunlambert" class="icon is-large has-text-light">
+            <i class="fab fa-2x fa-github"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "{{site.disqus.username}}";
-    var disqus_identifier = "{{site.disqus.username}}/{{page.url}}";
-    var disqus_url = "{{site.url}}{{page.url}}";
+  <section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <div class="level">
+          <div class="level-item has-text-centered">
+            <figure class="image is-128x128">
+              <img class="is-rounded" src="img/me-big.jpg">
+            </figure>
+          </div>
+        </div>
+        <div class="columns has-text-centered">
+          <div class="column">
+            <h1 class="title is-1">
+              YunLambert
+            </h1>
+            <h2 class="subtitle">
+              FullStack C++ Python
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
-{% endif %}
+  <section class="section">
+    <div class="container">
+      <h1 class="title">About Me</h1>
+      <hr />
+      <p>I am currently a master student working on "Computer Network" in the university of electronic science and technology of China.
+	  <br><br> Music[violin, guitar, music arrangement], drawing, photography and sports are all my favorite and I am really good at them.
+	  <br>Also, programming is what I love. <br><br>I am interested in creating new things[app, web, technology...], I want to use all my skills to make the world better!</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Experience</h1>
+      <hr />
+      <div class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img src="img/xigua.png" alt="Placeholder image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">XiGuaCity</p>
+              <p class="subtitle is-6">Backend Development Engineer - <time datetime="2019-3">March 2018</time> - <time
+                  datetime="2019-6">June 2019</time> </p>
+            </div>
+          </div>
+          <div class="content">
+            Using Ruby and MongoDB to make the website and Admin page. Making some APIs for the frontend to use and do some DB jobs. 
+          </div>
+        </div>
+      </div>
+	  <!--
+      <div class="card card-gap">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img src="img/pied-piper-logo.png" alt="Placeholder image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">Company Name</p>
+              <p class="subtitle is-6">Title - <time datetime="2018-1">August 2017</time> - <time
+                  datetime="2017-9">January 2018</time></p>
+            </div>
+          </div>
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Phasellus nec iaculis mauris.
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </section>
 
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Projects</h1>
+      <hr />
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical is-12">
+          <div class="tile">
+            <div class="tile is-parent is-vertical">
+              <article class="tile is-child notification">
+                <p class="title">Coming soon</p>
+                <figure class="image is-4by3">
+                  <img class="modal-trigger" data-target="project-1-modal" src="img/project-1-cover.png">
+                </figure>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="title">Coming soon</p>
+                <figure class="image is-4by3">
+                  <img class="modal-trigger" data-target="project-2-modal" src="img/project-2-cover.png">
+                </figure>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="title">Coming soon</p>
+                <figure class="image is-4by3">
+                  <img class="modal-trigger" data-target="project-3-modal" src="img/project-3-cover.png">
+                </figure>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical is-12">
+          <div class="tile">
+            <div class="tile is-parent is-vertical">
+              <article class="tile is-child notification">
+                <p class="title">Coming soon</p>
+                <figure class="image is-4by3">
+                  <img class="modal-trigger" data-target="project-4-modal" src="img/project-4-cover.png">
+                </figure>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="title">Coming soon</p>
+                <figure class="image is-4by3">
+                  <img class="modal-trigger" data-target="project-5-modal" src="img/project-5-cover.png">
+                </figure>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="title">Coming soon</p>
+                <figure class="image is-4by3">
+                  <img class="modal-trigger" data-target="project-6-modal" src="img/project-6-cover.png">
+                </figure>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Education</h1>
+      <hr />
+      <div class="card">
+        <div class="card-content">
+          <div class="content">
+            <p class="title is-4">UESTC</p>
+            <p class="subtitle is-6">Computer Network - <time datetime="2019-9">September 2019</time> - <time
+                datetime="2022-6">June 2022</time></p>
+          </div>
+          <div class="content">
+            Still reading....
+            <ul>
+              <li>achievement1</li>
+              <li>achievement2</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+	  <!--
+      <div class="card card-gap">
+        <div class="card-content">
+          <div class="content">
+            <p class="title is-4">School Name</p>
+            <p class="subtitle is-6">Program/Course - <time datetime="2015-9">September 2014</time> - <time
+                datetime="2015-9">Sepemter 2015</time></p>
+          </div>
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Phasellus nec iaculis mauris.
+            <ul>
+              <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+              <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+	  -->
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Contact</h1>
+      <hr />
+      <nav class="level">
+          <div class="level-item has-text-centered">
+            <div>
+              <a href="https://github.com/YunLambert" class="icon is-large">
+                <i class="fab fa-2x fa-github"></i>
+              </a>
+              <p class="heading"><a href="https://github.com/YunLambert">github.com/YunLambert</a></p>
+            </div>
+          </div>           
+          <div class="level-item has-text-centered">
+            <div>
+                <a href="https://fullstackmark.com" class="icon is-large">
+                  <i class="fas fa-2x fa-globe"></i>
+                </a>
+                <p class="heading"><a href="http://blog.yunlambert.top/">blog.yunlambert.top</a></p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+              <div>
+                  <a href="mailto:markmacneil@gmail.com" class="icon is-large">
+                    <i class="fas fa-2x fa-envelope"></i>
+                  </a>
+                  <p class="heading"><a href="mailto:markmacneil@gmail.com">yunlambert@gmail.com</a></p>
+              </div>
+            </div>
+            <div class="level-item has-text-centered">
+              <div>
+                  <a href="https://www.linkedin.com/in/lambert-yun-a23a1b13b/" class="icon is-large">
+                    <i class="fab fa-2x fa-linkedin-in"></i>
+                  </a>
+                  <p class="heading"><a href="https://www.linkedin.com/in/lambert-yun-a23a1b13b/">linkedin</a></p>
+              </div>
+            </div>
+        </nav>
+    </div>
+  </section>
+
+  <!-- Modals -->
+  <div id="project-1-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Coming soon</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <p class="image is-3by2">
+          <img src="img/project-1-cover.png" alt="">
+        </p>
+
+        <div class="content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat.
+        </div>
+
+        <div class="tags">
+          <span class="tag">angular</span>
+          <span class="tag">mongo</span>
+          <span class="tag">typscript</span>
+          <span class="tag">node</span>
+        </div>
+
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="project-2-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Project title</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <p class="image is-3by2">
+          <img src="img/project-2-cover.png" alt="">
+        </p>
+
+        <div class="content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat.
+        </div>
+
+        <div class="tags">
+          <span class="tag">angular</span>
+          <span class="tag">mongo</span>
+          <span class="tag">typscript</span>
+          <span class="tag">node</span>
+        </div>
+
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="project-3-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Project title</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <p class="image is-3by2">
+          <img src="img/project-3-cover.png" alt="">
+        </p>
+
+        <div class="content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat.
+        </div>
+
+        <div class="tags">
+          <span class="tag">angular</span>
+          <span class="tag">mongo</span>
+          <span class="tag">typscript</span>
+          <span class="tag">node</span>
+        </div>
+
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="project-4-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Project title</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <p class="image is-3by2">
+          <img src="img/project-4-cover.png" alt="">
+        </p>
+
+        <div class="content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat.
+        </div>
+
+        <div class="tags">
+          <span class="tag">angular</span>
+          <span class="tag">mongo</span>
+          <span class="tag">typscript</span>
+          <span class="tag">node</span>
+        </div>
+
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="project-5-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Project title</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <p class="image is-3by2">
+          <img src="img/project-5-cover.png" alt="">
+        </p>
+
+        <div class="content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat.
+        </div>
+
+        <div class="tags">
+          <span class="tag">angular</span>
+          <span class="tag">mongo</span>
+          <span class="tag">typscript</span>
+          <span class="tag">node</span>
+        </div>
+
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="project-6-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Project title</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <p class="image is-3by2">
+          <img src="img/project-6-cover.png" alt="">
+        </p>
+
+        <div class="content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat.
+        </div>
+
+        <div class="tags">
+          <span class="tag">angular</span>
+          <span class="tag">mongo</span>
+          <span class="tag">typscript</span>
+          <span class="tag">node</span>
+        </div>
+
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>         
+          <a href="https://github.com/mmacneil/devfolio" target="_blank" class="icon has-text-primary">
+             <i class="fab fa-github"></i> <strong>devfolio</strong></a>       
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/bundle.js"></script>
+</body>
+
+</html>
