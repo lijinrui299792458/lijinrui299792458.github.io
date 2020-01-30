@@ -3,7 +3,7 @@ title: Yun Blog
 SEOTitle: YunLambert's Blog
 header-img: img/post-bg-desk.png
 email: 469066072@qq.com
-description: "Only Music and Code can Build the World!"
+description: "Develop Myself"
 keyword: "Blog,Code"
 url: "http://yunlambert.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
@@ -11,7 +11,7 @@ github_repo: "https://github.com/YunLambert/YunLambert.github.io.git" # you code
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Keep learning and coding...."
+sidebar-about-description: "Develop Myself"
 sidebar-avatar: /img/my-avatar.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
@@ -60,11 +60,11 @@ kramdown:
 gitalk:
   enable: true    #是否开启Gitalk评论
   # Github Application 1:
-  # clientID: 346099f75f710cf629a2                           #生成的clientID
-  # clientSecret: f44bef3663ab8952bd09bbb2eedf1e35fbf3308e    #生成的clientSecret
+  clientID: 346099f75f710cf629a2                           #生成的clientID
+  clientSecret: f44bef3663ab8952bd09bbb2eedf1e35fbf3308e    #生成的clientSecret
   # Github Application 2:
-  clientID: 63f7ddf6421f48c66dd3                           #生成的clientID
-  clientSecret: 0c1b390cd01159a7f9fd0e9ac213daa6683b39c1    #生成的clientSecret
+  #clientID: 63f7ddf6421f48c66dd3                           #生成的clientID
+  # clientSecret: 0c1b390cd01159a7f9fd0e9ac213daa6683b39c1    #生成的clientSecret
   repo: yunlambert.github.io    #仓库名称
   owner: YunLambert    #github用户名
   admin: YunLambert
