@@ -239,7 +239,15 @@ class Solution {
 public:
     int dx[4] = {1, 0, -1, 0};
     int dy[4] = {0, 1, 0, -1};
-    int pipe[7][4]={{-1,-1,-1,-1},{-1,1,-1,3},{0,-1,2,-1},{-1,0,3,-1},{-1,-1,1,0},{3,2,-1,-1},{1,-1,-1,2}};
+    int pipe[7][4]={
+    {-1,-1,-1,-1},
+    {-1,1,-1,3},
+    {0,-1,2,-1},
+    {-1,0,3,-1},
+    {-1,-1,1,0},
+    {3,2,-1,-1},
+    {1,-1,-1,2},
+    };
     bool dfs(int x, int y, int dir, vector<vector<int>>& grid) {
         if (x == grid.size()-1 && y == grid[0].size()-1) return true;
         int nx = x + dx[dir], ny = y + dy[dir];
