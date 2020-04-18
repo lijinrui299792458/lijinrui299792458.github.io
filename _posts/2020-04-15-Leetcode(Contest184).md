@@ -213,7 +213,14 @@ HTML 里这些特殊字符和它们对应的字符实体包括：
 ```C++
 class Solution {
 public:
-    map<string, char> m = {{"&quot;", '\"'}, {"&apos;", '\''}, {"&amp;", '&'}, {"&gt;", '>'}, {"&lt;", '<'}, {"&frasl;", '/'}};
+    map<string, char> m = {
+      {"&quot;", '\"'}, 
+      {"&apos;", '\''}, 
+      {"&amp;", '&'}, 
+      {"&gt;", '>'}, 
+      {"&lt;", '<'}, 
+      {"&frasl;", '/'}
+    };
     string entityParser(string text) {
         int i = 0;
         string res;
