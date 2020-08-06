@@ -1,0 +1,394 @@
+---
+layout:     post
+title:      字符串哈希
+subtitle:   字符串哈希
+date:       2020-08-06
+author:     lijinrui299792458
+header-img: img/post-bg-tcp.jpg
+catalog: true
+tags:
+    - 字符串哈希
+
+---
+# 字符串匹配问题
+寻找长度为 $n$ 的主串 $S$ 中的匹配串 $T$（长 $m$）出现的位置或次数。  
+字符串哈希是将比较字符串转化为比较字符串的哈希值是否相等。  
+$H(C)$ 表示字符串 $C$ 的哈希值，$H(C,k)$ 表示字符串 $C$ 到第 $k$ 位的哈希值。
+# 具体流程 
+取两个合适的互质常数 $p,q$，对于字符串 $C=c_1c_2c_3\dots c_m$  
+$H(C)=(c_1p^{m-1}\;c_2p^{m-2}\;\dots c_mp^0) mod\; q$。一般可取 $q=2^{32}$ 或 $2^{64}$ 自然溢出。  
+此时比较 $S(n位)$ 与 $C$ 的子串 $C'=c_{k+1}\;c_{k+2}\;\dots c_{k+n}$ 是否匹配，只需比较 $H(S)$ 与 $H(C')=H(C,k+n)-H(C,k)\cdot p^n$。
+# **正确性**  
+由于取模，不同字符串的哈希值可能相同，但若 $q$ 较大，重复的概率较小。可使用双哈希，分别使用 $10^9+7 和 10^9+9$（孪生质数）。
+# 题目  
+## **[Oulipo](http://poj.org/problem?id=3461)**
+模板题
+### **Code**:
+```cpp
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<string>
+#include<cstring>
+using namespace std;
+typedef unsigned long long ull;
+
+string s1,s2;
+ull pow[1000001];
+ull has[1000001];
+
+int main()
+{
+    pow[0]=1;
+    for(int i=1;i<=1000000;i++)pow[i]=pow[i-1]*30;
+    int T;
+    cin>>T;
+    for(;T;T--)
+    {
+        int ans=0,len1,len2;
+        cin>>s1>>s2;
+        len1=s1.size();
+        len2=s2.size();
+        has[0]=0;
+        for(int i=0;i<len2;i++)
+        {
+            has[i+1]=has[i]*30+(ull)(s2[i]-'A'+1);
+        }
+        ull has1=0;
+        for(int i=0;i<len1;i++)
+        {
+            has1=has1*30+(ull)(s1[i]-'A'+1);
+        }
+        for(int i=0;i<=len2-len1;i++)
+        {
+            if(has1==has[i+len1]-has[i]*pow[len1])ans++/*,cout<<i<<"jjj"<<endl*/;
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
+}
+```
+## **[Power String](http://ybt.ssoier.cn:8088/problem_show.php?pid=1457)**
+~~此题似乎可以暴力过，暴力代码就不放了。~~
+最简单的想法就是取前 $1$ 位、$2$ 位枚举。
+### **Code**
+```cpp
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<string>
+#include<algorithm>
+using namespace std;
+typedef unsigned long long ull;
+#define b 131
+
+ull power[1000010];
+ull has[1000010];
+
+int main()
+{
+    string s;
+    
+    power[0]=1;
+    for(int i=1;i<=1000000;i++)power[i]=power[i-1]*b;
+    
+    while(1)
+    {
+        cin>>s;
+        if(s==".")return 0;
+        
+        int len=s.size();
+        has[0]=0;
+        for(int i=0;i<len;i++)has[i+1]=b*has[i]+(ull)(s[i]);
+        
+        // for(int i=1;i<=len;i++)cout<<power[i]<<endl;
+        for(int i=1;i<=len;i++)
+        {
+            if(len%i!=0)continue;
+            bool flag=1;
+            for(int j=i;j<len;j+=i)
+            {
+                if(has[i]!=has[j+i]-has[j]*power[i])
+                {
+                    flag=0;
+                    // cout<<j<<"ooo"<<endl;
+                    break;
+                }
+            }
+            if(flag)
+            {
+                cout<<len/i<<endl;
+                break;
+            }
+        }
+    }
+    return 0;
+}
+```
+## **[Seek the Name, Seek the Fame](http://ybt.ssoier.cn:8088/problem_show.php?pid=1458)**
+还是枚举长度。
+### **Code**
+```cpp
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<string>
+#include<algorithm>
+using namespace std;
+typedef unsigned long long ull;
+#define b 131
+
+ull power[400010];
+ull has[400010];
+
+int main()
+{
+    string s;
+    
+    power[0]=1;
+    for(int i=1;i<=400000;i++)power[i]=power[i-1]*b;
+    
+    while(cin>>s)
+    {
+        int len=s.size();
+        has[0]=0;
+        for(int i=0;i<len;i++)has[i+1]=b*has[i]+(ull)(s[i]);
+        
+        for(int i=1;i<=len;i++)
+        {
+            if(has[i]==has[len]-has[len-i]*power[i])cout<<i<<" ";
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+```
+## **[friends](http://ybt.ssoier.cn:8088/problem_show.php?pid=1459)**
+由于 $s$ 被复制过，所以 $U$ 中一定含有一个完整的 $s$。枚举插入的位置。
+### Code
+```cpp
+#include<iostream>
+#include<cstdio>
+#include<string>
+#include<cstring>
+#include<algorithm>
+using namespace std;
+typedef unsigned long long ull;
+#define b 33
+
+int n;
+string s;
+bool npr[500010];
+int prime[42000],zxzys[500010],fac[30];
+ull has[500010],power[500010];
+
+void sprime()
+{
+    int cnt=0;
+    for(int i=2;i<=n;i++)
+    {
+        if(!npr[i])prime[++cnt]=i,zxzys[i]=i;
+        for(int j=1;prime[j]*i<=n&&j<=cnt;j++)
+        {
+            npr[prime[j]*i]=1;
+            zxzys[prime[j]*i]=prime[j];
+            if(i%prime[j]==0)break;
+        }
+    }
+}
+
+bool judge(int l,int r,int len)
+{
+    return has[r-len]-has[l-1]*power[r-l-len+1]==has[r]-has[l+len-1]*power[r-l-len+1];
+}
+
+int main()
+{
+    cin>>n>>s;
+    
+    sprime();
+    power[0]=1;
+    for(int i=1;i<=n;i++)power[i]=power[i-1]*b;
+    has[0]=0;
+    for(int i=1;i<=n;i++)has[i]=has[i-1]*b+(ull)(s[i-1]-'a'+1);
+//    for(int i=1;i<=n;i++)cout<<has[i]<<" "<<power[i]<<endl;
+    
+    int q;
+    
+    cin>>q;
+    
+    for(;q;q--)
+    {
+        int l,r,cnt=0;
+        scanf("%d%d",&l,&r);
+        if(l==r)
+        {
+            puts("1");
+            continue;
+        }
+        int len=r-l+1;
+        while(len>1)
+        {
+            // cout<<zxzys[len]<<endl;
+            // break;
+            fac[++cnt]=zxzys[len];
+            len/=fac[cnt];
+        }
+        len=r-l+1;
+        for(int i=1;i<=cnt;i++)
+        {
+            if(judge(l,r,len/fac[i]))len/=fac[i];
+        }
+        printf("%d\n",len);
+    }
+    return 0;
+}
+```
+## [P3498 [POI2010]KOR-Beads](https://www.luogu.com.cn/problem/P3498)
+枚举每个长度。判重可用 `map`。（`set` 也行）
+### Code
+```cpp
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<cstring>
+#include<string>
+#include<map>
+using namespace std;
+typedef unsigned long long ull;
+#define b 1000000007
+
+ull has1[200001],has2[200001],power[200001];
+int s[200001],n;
+int ansc=0,cnt=0,ans[200001],ansp=0;
+map <ull,bool> mapp;
+
+int main()
+{
+    cin>>n;
+    for(int i=1;i<=n;i++)cin>>s[i];
+    
+    power[0]=1;
+    for(int i=1;i<=n;i++)power[i]=power[i-1]*b,has1[i]=has1[i-1]*b+s[i];
+    for(int i=n;i>=1;i--)has2[i]=has2[i+1]*b+s[i];
+    for(int i=1;i<=n/2;i++)
+    {
+        mapp.clear();
+        cnt=0;
+        for(int j=i;j<=n;j+=i)
+        {
+            if(n/i<ansp)break;//小小的特判
+            ull h1=has1[j]-has1[j-i]*power[i],h2=has2[j-i+1]-has2[j+1]*power[i];
+//            cout<<h1<<" "<<h2<<"ooo"<<endl;
+            if(mapp[h1])continue;
+            cnt++;
+//            printf("(%d,%d)\n",j-i+1,j);
+            mapp[h1]=1;
+            mapp[h2]=1;
+        }
+        if(cnt>ansp)ansc=1,ans[ansc]=i,ansp=cnt;
+        else if(cnt==ansp)ansc++,ans[ansc]=i;
+//        cout<<i<<" "<<cnt<<endl;
+    }
+    if(ansp==1)
+    {
+        cout<<ansp<<" "<<ansc+n-n/2<<endl;
+        for(int i=1;i<=ansc;i++)cout<<ans[i]<<" ";
+        for(int i=n/2+1;i<=n;i++)cout<<i<<" ";
+        return 0;
+    }
+    cout<<ansp<<" "<<ansc<<endl;
+    for(int i=1;i<=ansc;i++)cout<<ans[i]<<" ";
+}
+```
+## [[POI2010]ANT-Antisymmetry](https://www.luogu.com.cn/problem/P3501)
+### 暴力
+单纯枚举子串中点，可以拿到 60 分的高分（LOJ 上竟有 82 分）。
+```cpp
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<string>
+#include<algorithm>
+using namespace std;
+
+string s;
+bool str[500001];
+int n;
+
+int main()
+{
+    cin>>n>>s;
+    for(int i=1;i<=n;i++)
+    {
+        str[i]=s[i-1]=='1'?1:0;
+    }
+    
+    long long ans=0;
+    for(int mid=1;mid<=n;mid++)
+    {
+        for(int i=0;mid>i&&mid+i+1<=n;i++)
+        {
+            if(!(str[mid-i]^str[mid+i+1]))break;
+            ans++;
+        }
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+```
+### 正解
+正解当然是 hash（~~废话~~）+二分。
+原串求哈希，然后取反并倒序再求一遍，枚举子串中点然后二分子串长度。
+```cpp
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<string>
+#include<algorithm>
+typedef unsigned long long ull;
+using namespace std;
+
+string s;
+int str[500001];
+ull has1[500001],has2[500001],power[500001];
+int n;
+
+bool check(int mid,int len)
+{
+    return has1[mid+len+1]-has1[mid-len-1]*power[len*2+2]==has2[mid-len]-has2[mid+len+2]*power[len*2+2];
+}
+
+int main()
+{
+    cin>>n>>s;
+    for(int i=1;i<=n;i++)
+    {
+        str[i]=s[i-1]=='1'?1:0;
+    }
+    
+    power[0]=1;
+    for(int i=1;i<=n;i++)has1[i]=has1[i-1]*3+str[i],power[i]=power[i-1]*3;
+    for(int i=n;i>=1;i--)has2[i]=has2[i+1]*3+1-str[i];
+    
+    long long ans=0;
+    for(int mid=1;mid<=n;mid++)
+    {
+        int l=0,r=min(mid-1,n-mid-1),len=0;
+        if(r==l)
+        {
+            if(str[mid]^str[mid+1])ans++;
+            continue;
+        }
+        while(l<=r)
+        {
+            len=(l+r)/2;
+            if(check(mid,len))l=len+1;
+            else r=len-1;
+        }
+        ans+=l;
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+```
