@@ -1,13 +1,13 @@
 # Site settings
-title: Yun Blog
-SEOTitle: YunLambert's Blog
+title: Blog
+SEOTitle: lijinrui299792458's Blog
 header-img: img/post-bg-desk.png
-email: 469066072@qq.com
+email: lijinrui299792458@qq.com
 description: "Develop Myself"
 keyword: "Blog,Code"
-url: "http://yunlambert.github.io"          # your host, for absolute URL
+url: "http://lijinrui299792458.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
-github_repo: "https://github.com/YunLambert/YunLambert.github.io.git" # you code repository
+github_repo: "https://github.com/lijinrui299792458/lijinrui299792458.github.io.git" # you code repository
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
@@ -18,12 +18,12 @@ sidebar-avatar: /img/my-avatar.jpg      # use absolute URL, seeing it's used in 
 
 # SNS settings
 RSS: false
-weibo_username:     YunLambert
-#zhihu_username:     qiubaiying
-github_username:    YunLambert
-facebook_username:  YunLambert
-jianshu_username:   f7640a282211
-twitter_username:   yunyunlambert
+#weibo_username:     YunLambert
+zhihu_username:     nayrl
+github_username:    lijinrui299792458
+#facebook_username:  YunLambert
+#jianshu_username:   f7640a282211
+#twitter_username:   yunyunlambert
 
 
 
@@ -65,9 +65,9 @@ gitalk:
   # Github Application 2:
   #clientID: 63f7ddf6421f48c66dd3                           #生成的clientID
   # clientSecret: 0c1b390cd01159a7f9fd0e9ac213daa6683b39c1    #生成的clientSecret
-  repo: yunlambert.github.io    #仓库名称
-  owner: YunLambert    #github用户名
-  admin: YunLambert
+  repo: lijinrui299792458.github.io    #仓库名称
+  owner: lijinrui299792458    #github用户名
+  admin: lijinrui299792458
   distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
@@ -101,9 +101,9 @@ service-worker: true
 friends: [
     {
         title: "博客园",
-        href: "https://www.cnblogs.com/yunlambert/"
+        href: "https://www.cnblogs.com/nayrl/"
     },{
-        title: "airguanz",
-        href: "https://airguanz.github.io/"
+        title: "洛谷博客",
+        href: "https://www.luogu.com.cn/blog/nayrl/"
     }
 ]
