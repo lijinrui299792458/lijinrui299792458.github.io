@@ -61,8 +61,8 @@ kramdown:
 gitalk:
   enable: true    #是否开启Gitalk评论
   # Github Application 1:
-  clientID: 346099f75f710cf629a2                           #生成的clientID
-  clientSecret: f44bef3663ab8952bd09bbb2eedf1e35fbf3308e    #生成的clientSecret
+  clientID: 0e564a81671d369bd874                            #生成的clientID
+  clientSecret: 3cab90f7144209b35f924befbe600279dfafeb98    #生成的clientSecret
   # Github Application 2:
   #clientID: 63f7ddf6421f48c66dd3                           #生成的clientID
   # clientSecret: 0c1b390cd01159a7f9fd0e9ac213daa6683b39c1    #生成的clientSecret
