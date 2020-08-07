@@ -106,5 +106,8 @@ friends: [
     },{
         title: "洛谷博客",
         href: "https://www.luogu.com.cn/blog/nayrl/"
+    },{
+        title: "AcWing",
+        href: "https://www.acwing.com/user/myspace/index/28364/"
     }
 ]
