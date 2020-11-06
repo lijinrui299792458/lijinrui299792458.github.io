@@ -1,3 +1,3 @@
 # lijinrui299792458 Github.io
 
-Stay hungry, stay foolish.
+To the time to life, rather than to life in time.
