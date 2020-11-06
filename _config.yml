@@ -1,9 +1,9 @@
 # Site settings
-title: LiBlog
-SEOTitle: LiBlog
+title: lijinrui's Blog
+SEOTitle: lijinrui's Blog
 header-img: img/hd.png
 email: lijinrui299792458@qq.com
-description: "Learn in the Blog!"
+description: "Welcome to lijinrui's Blog."
 keyword: "Blog,Code"
 url: "http://lijinrui299792458.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
@@ -12,7 +12,7 @@ github_repo: "https://github.com/lijinrui299792458/lijinrui299792458.github.io.g
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Learn in the Blog!"
+sidebar-about-description: "Welcome to lijinrui's Blog."
 sidebar-avatar: /img/my-avatar.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
@@ -106,9 +106,6 @@ friends: [
     },{
         title: "洛谷博客",
         href: "https://www.luogu.com.cn/blog/nayrl/"
-    },{
-        title: "AcWing",
-        href: "https://www.acwing.com/user/myspace/index/28364/"
     },{
         title: "studyingfather",
         href: "https://studyingfather.com/"
