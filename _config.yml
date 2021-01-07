@@ -12,15 +12,15 @@ github_repo: "https://github.com/lijinrui299792458/lijinrui299792458.github.io.g
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Welcome to lijinrui's Blog."
-sidebar-avatar: /img/my-avatar.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+#sidebar-about-description: "Welcome to lijinrui's Blog."
+#sidebar-avatar: /img/my-avatar.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
 # SNS settings
 RSS: false
 #weibo_username:     YunLambert
-zhihu_username:     nayrl
+#zhihu_username:     nayrl
 github_username:    lijinrui299792458
 #facebook_username:  YunLambert
 #jianshu_username:   f7640a282211
