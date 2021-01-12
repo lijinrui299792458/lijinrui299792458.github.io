@@ -1,3 +1,3 @@
 # lijinrui299792458 Github.io
 
-To the time to life, rather than to life in time.
+> 杯中的水是光辉的，海中的水却是黑色的。小理可以用文字来说清楚，大理却只有沉默。
