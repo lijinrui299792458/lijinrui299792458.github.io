@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lijinrui299792458.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"lijinrui299792458.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="website">
@@ -103,6 +103,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -122,11 +123,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -192,18 +220,15 @@
 <p>如果递推式是：$a_n=p_1a_{n-1}+p_2a_{n-2}+\cdots+p_ma_{n-m}$（为了描述方便，称此类问题为 $m$ 类问题，像开头的问题为 $2$ 类问题）</p>
 <p>类比上面的做法，$a_n-ta_{n-1}=(p_1-t)(a_{n-1}-ta_{n-2})+\cdots$，$t^m-p_1t^{m-1}\cdots-p_m=0$，令 $b_n=a_n-ta_{n-1}$，转化为关于 ${b_n}$ 的 $m-1$ 类问题，接着一步步降低问题的复杂度即可。</p>
 <hr>
-<h2 id="微分方程"><a href="#微分方程" class="headerlink" title="微分方程"></a>微分方程</h2><p>特征根法同时也是解常系数齐次线性微分方程的方法。</p>
-<p>对于 $y’’-py’-qy=0$，设 $y’’-ry’=(p-r)(y’-ry’’)$，则 $r^2-pr-q=0$。</p>
-<p>若 $r_1\neq r_2,y=c_1e^{r_1x}+c_2e^{r_2x}$</p>
-<p>$r_1=r_2,y=(c_1+c_2x)e^{rx}$</p>
-<p>若有两复根 $a\pm bi,y=e^{ax}(c_1\cos bx+c_2\sin bx)$</p>
-<h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>一方面，两者的都思想都在于构造同构；另一方面，事实上，对于 $a_n=pa_{n-1}+qa_{n-2}$，<br>$$<br>A_n=\left[\begin{array}{l}a_n\\a_{n-1}\end{array}\right],A_n=\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]\times A_{n-1}=\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]^{n-2}\times\left[\begin{array}{l}a_2\\a_1\end{array}\right]<br>$$</p>
-<p>$$<br>(\lambda-p)\lambda=q,\lambda^2-p\lambda-q=0.<br>$$<br>Amazing 啊！数列的特征根事实上是它所对应的矩阵的特征值。我们可以将 $\left[\begin{array}{l}a_2\\a_1\end{array}\right]$ 用两个特征向量表示（易知如果 $\lambda_1=\lambda_2$，那么 $\left[\begin{array}{l}a_2\\a_1\end{array}\right]$ 和 $\lambda$ 在同一直线上）本质上，这种作法是将一个向量的旋转和伸缩转化为在特征向量方向的纯伸缩（因为没有旋转会更好解决（乘一个常数肯定没有乘矩阵恶心啊））。</p>
-<p>对于 $y’’-py’-qy=0$，<br>$$<br>\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]\times \left[\begin{array}{l}y’\\y\end{array}\right]=\left[\begin{array}{l}y’’\\y’\end{array}\right]<br>$$</p>
-<p>$$<br>\left[\begin{array}{l}y’\\y\end{array}\right]=e^{\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]x}\left[\begin{array}{l}y_0’\\y_0\end{array}\right]<br>$$<br>类比刚才的想法，将 $\left[\begin{array}{l}y_0’\\y_0\end{array}\right]$ 转化成特征向量来表示，这里就不展开了。</p>
-<p>现在我们思考：我们是怎么想到用这种方法解决问题的。先假设我们不知道这些概念，然后重新发现它们；我们现在构建一个数对 $(a_2,a_1)$——可以赋予它点或者向量的意义；现在看 $(a_3,a_2)$：$a_3=pa_2+qa_1$。为了能构建递推式我们尝试定义一下数对的乘法：$(a,b)\times(c,d)=ac+bd$，这样 $p_3=(a_3,a_2)=(p_2\times (p,q),p_2\times(1,0))$，然后发现我们刚才写的运算就是向量的数量积，我们就放心把它当向量看好了。现在我们换一下写法：$p_3=p_2\times ((p,q),(1,0))$，后面的东西不妨管它叫数对的对，数对的对中的第一个对和 $p_2$ 这个对相乘得到结果的第一个数，而第二个对与之相乘得到结果的第二个数，那这意味着什么自然不用多说。同时不应该忘记我们还赋予了它向量的意义，那对于一个向量（现在我们把已经得到的那些东西用我们正常应该用的方式表示），$\left[\begin{array}{l}a&amp;b\\c&amp;d\end{array}\right]\times \left[\begin{array}{l}x\\y\end{array}\right]$ 意味着新向量的“$x$”变成了“$ax+cy$”，相当于把原来的单位向量换成了 $\left[\begin{array}{l}a\\c\end{array}\right],\left[\begin{array}{l}b\\d\end{array}\right]$，再在新的坐标系中表示 $\left[\begin{array}{l}x\\y\end{array}\right]$。</p>
-<p>最后总结一下：这些方法的本质是统一的：同构。同时后者的抽象程度更高，更容易在问题之间建立联系。</p>
-
+<h2 id="微分方程"><a href="#微分方程" class="headerlink" title="微分方程"></a>微分方程</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/08/06/%E7%89%B9%E5%BE%81%E6%A0%B9%E6%B3%95%E4%B8%8E%E7%89%B9%E5%BE%81%E5%80%BC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -363,6 +388,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
