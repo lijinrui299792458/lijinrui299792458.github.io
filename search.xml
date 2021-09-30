@@ -3,8 +3,7 @@
   <entry>
     <title>外观数列</title>
     <url>/2021/08/19/%E5%A4%96%E8%A7%82%E6%95%B0%E5%88%97/</url>
-    <content><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>此处直接使用 Conway 的记法：</p>
-<p><img src="/2021/08/19/%E5%A4%96%E8%A7%82%E6%95%B0%E5%88%97/1.png" alt="picture 1"></p>
+    <content><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p><img src="/2021/08/19/%E5%A4%96%E8%A7%82%E6%95%B0%E5%88%97/1.png" alt="picture 1"></p>
 <p><img src="/2021/08/19/%E5%A4%96%E8%A7%82%E6%95%B0%E5%88%97/2.png" alt="picture 2"></p>
 <h1 id="Theory"><a href="#Theory" class="headerlink" title="Theory"></a>Theory</h1><p>注：在以下讨论中将不会考虑 $[ \ ]$ 和 $[2^2]$ 单独出现的乏趣情形。</p>
 <p>可以想到将一个长的串分割为数个不相干的段。考虑段之间的情形，即考虑一个段的开头和结尾。</p>
