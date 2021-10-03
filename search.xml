@@ -664,6 +664,47 @@
       </tags>
   </entry>
   <entry>
+    <title>数论（1）</title>
+    <url>/2021/10/02/%E6%95%B0%E8%AE%BA%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>若 $p$ 为质数，$a$ 不是 $p$ 的倍数，则 $a^{p-1}\equiv 1(\mod p)$</p>
+<p>证明：</p>
+<p>$0&lt;t&lt;p,ta$ 在 $\mod p$ 下互不相同，因为如果 $t\neq k,ta\equiv ka(\mod p),t\equiv k(\mod p)$</p>
+<p>故 $a^{p-1}(p-1)!\equiv(p-1)!(\mod p),a^{p-1}\equiv 1(\mod p)$</p>
+<h2 id="积性函数"><a href="#积性函数" class="headerlink" title="积性函数"></a>积性函数</h2><p>任意 $\gcd(m,n)=1$，有 $f(m)f(n)=f(mn)$，则 $f(x)$ 为积性函数。特殊地，若对任意 $m,n$ 都有 $f(m)f(n)=f(mn)$，则 $f(x)$ 为完全积性函数。</p>
+<p>注：常见的积性函数：</p>
+<ul>
+<li>$\epsilon(x)=[x=1]$</li>
+<li>$1(n)=1$</li>
+<li>$id_k(n)=n^k$</li>
+<li>$\sigma_k(n)=\sum_{d|n}d^k$</li>
+<li>$\varphi(n)$：一会要说的欧拉函数</li>
+<li>$\mu(n)$：以后会说的莫比乌斯函数</li>
+</ul>
+<h2 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h2><p>$\varphi(n)$ 为不超过 $n$ 且与 $n$ 互素的正整数的个数。</p>
+<ul>
+<li><p>$p 为素数\Leftrightarrow\varphi(p)=p-1$</p>
+</li>
+<li><p>$\sum_{d|m}\varphi\left(\frac{m}{d}\right)=m$<br>$$<br>\varphi(m)=\sum_{i=1}^m[\gcd(m,i)=1]=m-\sum_{d|m,d\ne1}\sum_{i=d}^m[\gcd(m,i)=d]<br>$$</p>
+<p>$$<br>=m-\sum_{d|m,d\ne1}\sum_{d|i}^m\left[\gcd\left(\frac{m}{d},\frac{i}{d}\right)=1\right]<br>$$</p>
+<p>$$<br>=m-\sum_{d|m,d\ne1}\varphi\left(\frac{m}{d}\right),\therefore\sum_{d|m}\varphi\left(\frac{m}{d}\right)=m<br>$$</p>
+</li>
+<li><p>$\gcd(m,n)=1,\varphi(m)\varphi(n)=\varphi(mn)$<br>$$<br>\varphi(m)=\sum_{i=1}^m[\gcd(m,i)=1],\varphi(mn)=\sum_{i=1}^{mn}[\gcd(mn,i)=1]<br>$$</p>
+<p>$$<br>=\sum_{i=1}^{mn}[\gcd(m,i)=1]\cdot[\gcd(n,i)=1]<br>$$</p>
+<p>$$<br>=\sum_{i=1}^{mn}[\gcd(m,i\mod m)=1][\gcd(n,i\mod n)=1]<br>$$</p>
+<p>$$<br>=\sum_{i=1}^m\left([\gcd(m,i)=1]\sum_{j=0}^{n-1}[\gcd(n,(mj+i)\mod n)=1] \right)<br>$$</p>
+<p>$$<br>=\sum_{i=1}^m\left([\gcd(m,i)=1]\sum_{j=1}^{n}[\gcd(n,j)=1] \right)<br>$$</p>
+<p>$$<br>=\sum_{i=1}^m[\gcd(m,i)=1]\sum_{j=1}^{n}[\gcd(n,j)=1]=\varphi(m)\varphi(n)<br>$$</p>
+<p>因此，欧拉函数是积性函数。</p>
+</li>
+</ul>
+<h2 id="欧拉定理"><a href="#欧拉定理" class="headerlink" title="欧拉定理"></a>欧拉定理</h2><p>若 $\gcd(a,m)=1$，则 $a^{\varphi(m)}\equiv1(\mod m)$</p>
+<p>证明与费马小定理类似。</p>
+]]></content>
+      <tags>
+        <tag>OI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>特征根法与特征值</title>
     <url>/2021/08/06/%E7%89%B9%E5%BE%81%E6%A0%B9%E6%B3%95%E4%B8%8E%E7%89%B9%E5%BE%81%E5%80%BC/</url>
     <content><![CDATA[<h2 id="数列"><a href="#数列" class="headerlink" title="数列"></a>数列</h2><p>对于数列 $a_n=pa_{n-1}+qa_{n-2}$，已知 $a_1,a_2$，求通项公式。</p>
