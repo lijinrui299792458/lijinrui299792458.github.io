@@ -664,6 +664,30 @@
       </tags>
   </entry>
   <entry>
+    <title>特征根法与特征值</title>
+    <url>/2021/08/06/%E7%89%B9%E5%BE%81%E6%A0%B9%E6%B3%95%E4%B8%8E%E7%89%B9%E5%BE%81%E5%80%BC/</url>
+    <content><![CDATA[<h2 id="数列"><a href="#数列" class="headerlink" title="数列"></a>数列</h2><p>对于数列 $a_n=pa_{n-1}+qa_{n-2}$，已知 $a_1,a_2$，求通项公式。</p>
+<p>对于此类问题，基本的思想是在等式两边制造同构。不妨设同构的部分是 $a_n-ta_{n-1}$，则：<br>$$<br>a_n-ta_{n-1}=(p-t)(a_{n-1}-ta_{n-2})-(t^2-pt-q)a_{n-2}<br>$$</p>
+<p>$$<br>\therefore t^2-pt-q=0<br>$$<br>$t^2-pt-q=0$ 称为数列 ${a_n}$ 的特征方程，其根称为 ${a_n}$ 的特征根。</p>
+<p>如果方程有不等两根（<strong>不是实根也可以</strong>），那么将推出的两个式子（分别用两根推出 $a_n-ta_{n-1}$ 的通项）作差，消去 $a_n$ 项。</p>
+<p>若方程两根相等，则 $t=\frac{p}{2},p-t=t$，最后可以整理出 $\frac{a_n}{t^n}$ 是等差数列。</p>
+<hr>
+<h2 id="微分方程"><a href="#微分方程" class="headerlink" title="微分方程"></a>微分方程</h2><p>特征根法同时也是解常系数齐次线性微分方程的方法。</p>
+<p>对于 $y’’-py’-qy=0$，设 $y’’-ry’=(p-r)(y’-ry’’)$，则 $r^2-pr-q=0$。</p>
+<p>若 $r_1\neq r_2,y=c_1e^{r_1x}+c_2e^{r_2x}$</p>
+<p>$r_1=r_2,y=(c_1+c_2x)e^{rx}$</p>
+<p>若有两复根 $a\pm bi,y=e^{ax}(c_1\cos bx+c_2\sin bx)$</p>
+<h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>一方面，两者的思想都在于构造同构；另一方面，事实上，对于 $a_n=pa_{n-1}+qa_{n-2}$，<br>$$<br>A_n=\left[\begin{array}{l}a_n\\a_{n-1}\end{array}\right],A_n=\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]\times A_{n-1}=\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]^{n-2}\times\left[\begin{array}{l}a_2\\a_1\end{array}\right]<br>$$</p>
+<p>$$<br>(\lambda-p)\lambda=q,\lambda^2-p\lambda-q=0.<br>$$<br>Amazing 啊！数列的特征根事实上是它所对应的矩阵的特征值。我们可以将 $\left[\begin{array}{l}a_2\\a_1\end{array}\right]$ 用两个特征向量表示（易知如果 $\lambda_1=\lambda_2$，那么 $\left[\begin{array}{l}a_2\\a_1\end{array}\right]$ 和 $\lambda$ 在同一直线上）本质上，这种作法是将一个向量的旋转和伸缩转化为在特征向量方向的伸缩。</p>
+<p>对于 $y’’-py’-qy=0$，<br>$$<br>\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]\times \left[\begin{array}{l}y’\\y\end{array}\right]=\left[\begin{array}{l}y’’\\y’\end{array}\right]<br>$$</p>
+<p>$$<br>\left[\begin{array}{l}y’\\y\end{array}\right]=e^{\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]x}\left[\begin{array}{l}y_0’\\y_0\end{array}\right]<br>$$<br>类比刚才的想法，将 $\left[\begin{array}{l}y_0’\\y_0\end{array}\right]$ 转化成特征向量来表示。</p>
+<p>矩阵本质上是对信息的组合加以抽象的产物。由于有更高的抽象程度，它可以被赋予更多的含义，找到不同事物的共同结构特点。同时无论是哪种方法其思想都在于构造统一的表示方法，可见抽象与统一大概是数学之魂吧。</p>
+]]></content>
+      <tags>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数论（1）</title>
     <url>/2021/10/02/%E6%95%B0%E8%AE%BA%EF%BC%881%EF%BC%89/</url>
     <content><![CDATA[<h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>若 $p$ 为质数，$a$ 不是 $p$ 的倍数，则 $a^{p-1}\equiv 1(\mod p)$</p>
@@ -701,31 +725,29 @@
 <p>证明与费马小定理类似。</p>
 ]]></content>
       <tags>
+        <tag>math</tag>
         <tag>OI</tag>
       </tags>
   </entry>
   <entry>
-    <title>特征根法与特征值</title>
-    <url>/2021/08/06/%E7%89%B9%E5%BE%81%E6%A0%B9%E6%B3%95%E4%B8%8E%E7%89%B9%E5%BE%81%E5%80%BC/</url>
-    <content><![CDATA[<h2 id="数列"><a href="#数列" class="headerlink" title="数列"></a>数列</h2><p>对于数列 $a_n=pa_{n-1}+qa_{n-2}$，已知 $a_1,a_2$，求通项公式。</p>
-<p>对于此类问题，基本的思想是在等式两边制造同构。不妨设同构的部分是 $a_n-ta_{n-1}$，则：<br>$$<br>a_n-ta_{n-1}=(p-t)(a_{n-1}-ta_{n-2})-(t^2-pt-q)a_{n-2}<br>$$</p>
-<p>$$<br>\therefore t^2-pt-q=0<br>$$<br>$t^2-pt-q=0$ 称为数列 ${a_n}$ 的特征方程，其根称为 ${a_n}$ 的特征根。</p>
-<p>如果方程有不等两根（<strong>不是实根也可以</strong>），那么将推出的两个式子（分别用两根推出 $a_n-ta_{n-1}$ 的通项）作差，消去 $a_n$ 项。</p>
-<p>若方程两根相等，则 $t=\frac{p}{2},p-t=t$，最后可以整理出 $\frac{a_n}{t^n}$ 是等差数列。</p>
-<hr>
-<h2 id="微分方程"><a href="#微分方程" class="headerlink" title="微分方程"></a>微分方程</h2><p>特征根法同时也是解常系数齐次线性微分方程的方法。</p>
-<p>对于 $y’’-py’-qy=0$，设 $y’’-ry’=(p-r)(y’-ry’’)$，则 $r^2-pr-q=0$。</p>
-<p>若 $r_1\neq r_2,y=c_1e^{r_1x}+c_2e^{r_2x}$</p>
-<p>$r_1=r_2,y=(c_1+c_2x)e^{rx}$</p>
-<p>若有两复根 $a\pm bi,y=e^{ax}(c_1\cos bx+c_2\sin bx)$</p>
-<h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>一方面，两者的思想都在于构造同构；另一方面，事实上，对于 $a_n=pa_{n-1}+qa_{n-2}$，<br>$$<br>A_n=\left[\begin{array}{l}a_n\\a_{n-1}\end{array}\right],A_n=\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]\times A_{n-1}=\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]^{n-2}\times\left[\begin{array}{l}a_2\\a_1\end{array}\right]<br>$$</p>
-<p>$$<br>(\lambda-p)\lambda=q,\lambda^2-p\lambda-q=0.<br>$$<br>Amazing 啊！数列的特征根事实上是它所对应的矩阵的特征值。我们可以将 $\left[\begin{array}{l}a_2\\a_1\end{array}\right]$ 用两个特征向量表示（易知如果 $\lambda_1=\lambda_2$，那么 $\left[\begin{array}{l}a_2\\a_1\end{array}\right]$ 和 $\lambda$ 在同一直线上）本质上，这种作法是将一个向量的旋转和伸缩转化为在特征向量方向的伸缩。</p>
-<p>对于 $y’’-py’-qy=0$，<br>$$<br>\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]\times \left[\begin{array}{l}y’\\y\end{array}\right]=\left[\begin{array}{l}y’’\\y’\end{array}\right]<br>$$</p>
-<p>$$<br>\left[\begin{array}{l}y’\\y\end{array}\right]=e^{\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]x}\left[\begin{array}{l}y_0’\\y_0\end{array}\right]<br>$$<br>类比刚才的想法，将 $\left[\begin{array}{l}y_0’\\y_0\end{array}\right]$ 转化成特征向量来表示。</p>
-<p>矩阵本质上是对信息的组合加以抽象的产物。由于有更高的抽象程度，它可以被赋予更多的含义，找到不同事物的共同结构特点。同时无论是哪种方法其思想都在于构造统一的表示方法，可见抽象与统一大概是数学之魂吧。</p>
+    <title>数论（2）</title>
+    <url>/2021/10/24/%E6%95%B0%E8%AE%BA%EF%BC%882%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="欧拉定理的推广"><a href="#欧拉定理的推广" class="headerlink" title="欧拉定理的推广"></a>欧拉定理的推广</h2><p>欧拉定理要求 $\gcd(a,m)=1$，因此在 $a,m$ 不互质时无法直接使用。对于 $a,m$，若 $gcd(m,a)\ne 1$ 且 $x&gt;\varphi(m)$，有<br>$$<br>a^x\equiv a^{x\mod\varphi(m)+\varphi(m)}\mod m<br>$$<br>证明：<br>$$<br>m=\prod_{i=1}^{n}p_i^{q_i},a=s\prod_{i=1}^{n}p_i^{k_i},\gcd(s,m)=1<br>$$</p>
+<p>$$<br>即证:t\ge1,a^{t\varphi(m)}\equiv s^{t\varphi(m)}\prod_{i=1}^{n}p_i^{t\varphi(m)k_i}\equiv a^{\varphi(m)}\mod m<br>$$</p>
+<p>$$<br>对于 k_i=0,p_i^{t\varphi(m)k_i}\equiv1\mod m<br>$$</p>
+<p>$$<br>\varphi(m)\ge\varphi(p_i^{q_i})=p_i^{q_i-1}(p_i-1)\ge2^{q_i-1}\ge q_i<br>$$</p>
+<p>$$<br>p_i^{b\varphi(m)}\equiv1 \mod \left(\frac{m}{p_i^{q_i}}\right),p_i^{b\varphi(m)+q_i}\equiv p_i^{q_i}\mod m<br>$$</p>
+<p>$$<br>p_i^{(b+1)\varphi(m)}\equiv p_i^{\varphi(m)}\mod m<br>$$</p>
+<p>显然，原命题成立。</p>
+<h3 id="例"><a href="#例" class="headerlink" title="例"></a>例</h3><p><a href="https://www.luogu.com.cn/problem/P4139">P4139 上帝与集合的正确用法</a></p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>$$<br>2^{2^{2\cdots}}\equiv 2^{\left(2^{2\cdots}\mod\varphi(p)+\varphi(p)\right)}\equiv2^{\left(2^{\left(2^{2\cdots}\mod\varphi(\varphi(p))+\varphi(\varphi(p))\right)}\mod\varphi(p)+\varphi(p)\right)}\mod p<br>$$</p>
+<p>当 $\varphi(\varphi(\cdots\varphi(p)))=1$ 时，在往上的 $2$ 就对答案没有影响了，而容易看出，这些 $2$ 最多有 $\log$ 层。</p>
+<h4 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line">ll t,p;</span><br><span class="line">ll pri[<span class="number">700000</span>],phi[<span class="number">10000001</span>],cnt;</span><br><span class="line"><span class="keyword">bool</span> ntpr[<span class="number">10000001</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    phi[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=<span class="number">10000000</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="keyword">if</span>(!ntpr[i])</span><br><span class="line">        &#123;</span><br><span class="line">            pri[++cnt]=i;</span><br><span class="line">            phi[i]=i<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=cnt&amp;&amp;pri[j]*i&lt;=<span class="number">10000000</span>;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            ntpr[i*pri[j]]=<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(!(i%pri[j]))</span><br><span class="line">            &#123;</span><br><span class="line">                phi[i*pri[j]]=phi[i]*pri[j];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            phi[i*pri[j]]=phi[i]*phi[pri[j]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">quik_pow</span><span class="params">(ll a,ll b,ll mod)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ll ret=<span class="number">1</span>,_=a;</span><br><span class="line">    <span class="keyword">while</span>(b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(b&amp;<span class="number">1</span>)ret*=_,ret%=mod;</span><br><span class="line">        _=_*_,_%=mod;</span><br><span class="line">        b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">solv</span><span class="params">(ll _)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(_==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">1LL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">quik_pow</span>(<span class="number">2LL</span>,<span class="built_in">solv</span>(phi[_])+phi[_],_);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">init</span>();</span><br><span class="line">    cin&gt;&gt;t;</span><br><span class="line">    <span class="keyword">while</span>(t)</span><br><span class="line">    &#123;</span><br><span class="line">        t--;</span><br><span class="line">        cin&gt;&gt;p;</span><br><span class="line">        cout&lt;&lt;<span class="built_in">solv</span>(p)&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <tags>
         <tag>math</tag>
+        <tag>OI</tag>
       </tags>
   </entry>
 </search>
