@@ -206,7 +206,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-13 15:18:55 / 修改时间：16:54:43" itemprop="dateCreated datePublished" datetime="2022-02-13T15:18:55+08:00">2022-02-13</time>
+              <time title="创建时间：2022-02-13 15:18:55 / 修改时间：17:24:09" itemprop="dateCreated datePublished" datetime="2022-02-13T15:18:55+08:00">2022-02-13</time>
             </span>
 
           
@@ -221,13 +221,13 @@
 
       
           <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><img src="/2022/02/13/%E7%A4%BC%E7%89%A9%E8%B4%AD%E4%B9%B0/1.png"></p>
+<p>$n\le 3000,m\le 300$</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>肯定是要算贡献的。</p>
 <p>考察一个礼物的贡献，用 $g_{i,j}$ 表示其贡献，即：第 $i$ 种礼物有 $j$ 个，期望被拿走的个数。</p>
 <p>考虑从 $g_{i,j}$ 转移到 $g_{i,j+1}$，发现这取决于喜欢这种礼物的人数。考虑有 $k$ 个人喜欢这种礼物的概率，用 $h_{i,j,k}$ 表示前 $j$ 个人中有 $k$ 个人喜欢 $i$ 礼物的概率。此时 $g_{i,j}=\sum_{x=0}^{n}\min (x,j)h_{i,n,x}$，进而 $g_{i,j}-g_{i,j-1}=\sum_{x=j}^nh_{i,n,x}$。</p>
 <p>进而买 $j$ 件前 $i$ 种礼物的期望值为：$f_{i,j}=\max(f_{i-1,j-x}+g_{i,x})$。发现 $g$ 的差分不增，故可以转换为贪心，每次寻找 $g$ 增量最大的种类。</p>
 <p>此时瓶颈在于求 $h$。<br>$$<br>h_{i,j,k}=(1-p)h_{i,j-1,k}+ph_{i,j-1,k-1}<br>$$<br>发现我们每次用一个 $\Delta g$ 更新后，只需知道 $\sum_{x=j}^nh_{i,n,x}$，而之前一定已经求过 $\sum_{x=j-1}^nh_{i,n,x}$，故只需求 $h_{i,n,j-1}$，而此前必求过 $h_{i,n,j-2}$，故可以递推，并不需要知道全部 $h$。</p>
 <p>复杂度是对的。</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/02/13/%E7%A4%BC%E7%89%A9%E8%B4%AD%E4%B9%B0/#more" rel="contents">
