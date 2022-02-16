@@ -82,7 +82,7 @@
 <h2 id="texttt-endpos"><a href="#texttt-endpos" class="headerlink" title="$\texttt{endpos}$"></a>$\texttt{endpos}$</h2><p>关于 $\texttt{endpos}$，我们不加证明地给出结论（其实证明很简单）：</p>
 <ol>
 <li>若 $\texttt{endpos}(s)=\texttt{endpos}(t),\text{len}(s)\le \text{len}(t)$，则 $s$ 是 $t$ 的后缀。</li>
-<li>对于 $s,t,\text{len}(s)\le \text{len}(t)$，有 $\texttt{endpos}(s)\in\texttt{endpos}(t)$ 或 $\texttt{endpos}(s)\cap\texttt{endpos}(t)=\empty$。</li>
+<li>对于 $s,t,\text{len}(s)\le \text{len}(t)$，有 $\texttt{endpos}(s)\in\texttt{endpos}(t)$ 或 $\texttt{endpos}(s)\cap\texttt{endpos}(t)=\emptyset$。</li>
 <li>$\texttt{endpos}$ 相同的子串组成一个 $\texttt{endpos}$ 等价类。一个等价类中的子串为一个串的连续的一些后缀。</li>
 <li>$\texttt{endpos}$ 等价类的数量为 $O(n)$。</li>
 </ol>
