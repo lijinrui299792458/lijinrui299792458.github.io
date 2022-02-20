@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://lijinrui299792458.github.io/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/1.png">
 <meta property="og:image" content="http://lijinrui299792458.github.io/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/2.png">
 <meta property="article:published_time" content="2022-02-14T03:39:03.000Z">
-<meta property="article:modified_time" content="2022-02-16T07:49:52.082Z">
+<meta property="article:modified_time" content="2022-02-20T09:21:46.011Z">
 <meta property="article:author" content="lijinrui299792458">
 <meta property="article:tag" content="OI">
 <meta property="article:tag" content="字符串">
@@ -219,7 +219,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-16 15:49:52" itemprop="dateModified" datetime="2022-02-16T15:49:52+08:00">2022-02-16</time>
+                <time title="修改时间：2022-02-20 17:21:46" itemprop="dateModified" datetime="2022-02-20T17:21:46+08:00">2022-02-20</time>
               </span>
 
           
@@ -261,7 +261,7 @@
 <p>先考虑这种情况没有发生：我们只需要令 $\text{fa}(o)$ 等于这个祖先节点的 <code>c</code> 边所通向的节点即可。</p>
 <p>下面考虑这种情况发生。</p>
 <p>如何判断这种情况的发生？为了方便，记所寻到的祖先节点为 $x$，$x$ 的 <code>c</code> 边通向 $y$。</p>
-<p>如果在这种情况发生，一定是 $y$ 所表示的一些子串是加入之后的后缀（称“合法”），<strong>一些子串不是（非法）</strong>。这些合法子串的长度都与 $x$ 所表示的子串得长度 $+1$ 一一对应，而非法的子串就一定没有一个 $x$ 的子串与之对应。由 $\texttt{endpos}$ 的性质可知非法子串一定是最长的一些子串。因此我们只要知道是否（$\text{ml}(x)$ 表示 $x$ 的等价类中最长子串的长度） $\text{ml}(x)+1=\text{ml}(y)$ 即可。因此在每个节点维护 $\text{ml}$。</p>
+<p>如果在这种情况发生，一定是 $y$ 所表示的一些子串是加入之后的后缀（称“合法”），<strong>一些子串不是（非法）</strong>。这些合法子串的长度都与 $x$ 以及其通向 $y$ 的祖先所表示的子串得长度 $+1$ 一一对应，而非法的子串就一定没有一个这样的子串与之对应。由 $\texttt{endpos}$ 的性质可知非法子串一定是最长的一些子串。因此我们只要知道是否（$\text{ml}(x)$ 表示 $x$ 的等价类中最长子串的长度） $\text{ml}(x)+1=\text{ml}(y)$ 即可。因此在每个节点维护 $\text{ml}$。</p>
 <p>现在加入之后，$y$ 点有两个等价类。因此新建一个节点 $t$，把那些 $\texttt{endpos}$ 增加了的拿出来（这些是那些合法子串，他们作为新串后缀出现了一次）。</p>
 <p>容易知道，$\text{ml}(t)=\text{ml}(x)+1,\text{fa}(t)=\text{fa}(y),\text{fa}(y)=t,\text{fa}(o)=t$。</p>
 <p>考虑边。首先考虑出边，虽然 $t$ 和 $y$ 的 $\texttt{endpos}$ 不同，但因为这两个节点的子串的 $\texttt{endpos}$ 差异只在原串的结尾处而这里不可能再向后拓展一个字符，在结尾加一个字符后肯定在一个等价类中，因此 $t$ 的出边只需继承 $y$ 即可。接下来考虑入边。发现 $x$ 的串为 $\texttt{endpos}$ 原非空而增加的最大的串，此时应该更改 $x$ 的串的后缀，因此跳 $x$ 的父亲。对于边 <code>c</code> 指向 $y$ 的点，改为让它指向 $t$。</p>
@@ -275,7 +275,7 @@
 <h3 id="边"><a href="#边" class="headerlink" title="边"></a>边</h3><p>首先建一个生成树，边数 $O(n)$。</p>
 <p>如果在自动机上跑遍所有子串必然遍历到所有边，但我们不需要这样做。考虑到所有的子串都一定是某个后缀的前缀，因此只需跑所有的后缀。</p>
 <p>我们从 <code>lst</code> 出发，逆向跑回 1 节点。</p>
-<p>而在跑每一个后缀的时候，如果跑的时候发现走不通，就加一条应该走的边。注意到此时这条边所通向的的节点一定可以通向 1 节点（有树做基础），并且这样走由于经过了刚才新添加的边，因此一定是一个新的后缀。由此可以发现，每天加一条边，至少可以多一个后缀。因此边也是 $O(n)$ 的。</p>
+<p>而在跑每一个后缀的时候，如果跑的时候发现走不通，就加一条应该走的边。注意到此时这条边所通向的的节点一定可以通向 1 节点（有树做基础），并且这样走由于经过了刚才新添加的边，因此一定是一个新的后缀。由此可以发现，每加一条边，至少可以多一个后缀。因此边也是 $O(n)$ 的。</p>
 <h3 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h3><p>注意到其中两个 <code>while</code> 是时间复杂度不确定的原因。</p>
 <p>对于：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>((x)&amp;&amp;(!sam[x].ch[c]))sam[x].ch[c]=lst,x=sam[x].fa;</span><br></pre></td></tr></table></figure>
