@@ -1,56 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Burnside 引理与 Polya 定理</title>
-    <url>/2021/10/31/Burnside-%E5%BC%95%E7%90%86%E4%B8%8E-Polya-%E5%AE%9A%E7%90%86/</url>
-    <content><![CDATA[<h2 id="置换群"><a href="#置换群" class="headerlink" title="置换群"></a>置换群</h2><ol>
-<li><p>置换：置换是一个集合映至自身的双射。$(a_1,a_2,\cdots,a_n)$ 表示将原数列的第 $a_i$ 个数在此置换作用下变到第 $i$ 个位置。</p>
-</li>
-<li><p>对于状态 $s$ 和置换 $f$，记 $f*s$ 为将 $f$ 作用于 $s$ 所得到的状态。</p>
-</li>
-<li><p>定义置换的乘法：$f\cdot g$ 表示显作用 $g$ 再作用 $f$。</p>
-</li>
-<li><p>置换群：有限集合上的一些置换组成的集合在置换的乘法下组成的群。</p>
-</li>
-<li><p>等价类：若状态组成的集合 $X$ 中的元素经过置换群 $G$ 中的置换作用后可以变成相同的状态，则这些状态属于一个等价类。等价类组成的集合记为 $X/G$。</p>
-</li>
-<li><p>循环：如果一个置换 $f=(a_1,a_2,\cdots,a_n)$，存在 $k$ 个元素使得 $a_{x_1}=x_2,a_{x_2}=x_3,\cdots,a_{x_k}=x_1$，则称 $x_1,x_2,\cdots,x_k$ 为一个长度为 $k$ 的循环。一个置换可以被拆分为一些不相交的循环，如：<br>$$<br>(6,5,7,4,1,2,3)=(1,6,2,5)\circ(3,7)\circ(4)<br>$$</p>
-</li>
-<li><p>轨道与稳定子：<br>$$<br>X^{\tau}={s|s\in X,\tau*s=s}<br>$$</p>
-<p>$$<br>G(s)={\tau*s|\tau\in G}<br>$$</p>
-<p>$G(s)$ 称为 $s$ 的<strong>轨道</strong>。<br>$$<br>G^s={\tau|\tau*s=s}<br>$$<br>$G^s$ 称为 $s$ 的<strong>稳定子</strong>。</p>
-</li>
-</ol>
-<h2 id="Burnside-引理"><a href="#Burnside-引理" class="headerlink" title="Burnside 引理"></a>Burnside 引理</h2><p>$$<br>\left|X/G\right|=\frac{\sum_{\tau\in G}\left|X^\tau\right|}{\left|G\right|}<br>$$</p>
-<p>证明：<br>$$<br>\sum_{\tau\in G}\left|X^\tau\right|=\sum_{\tau\in G}\sum_{s\in X}[\tau*s=s]<br>$$</p>
-<p>$$<br>=\sum_{s\in X}\sum_{\tau\in G}[\tau*s=s]=\sum_{s\in X}\left|G^s\right|<br>$$</p>
-<p>注意到，$s$ 所在的等价类的大小（记为 $|L_s|$）为 $\tau*s$ 的所有可能结果数。</p>
-<p>联想拉格朗日定理，可以猜想：$\left|G^s\right|=\frac{|G|}{|L_s|}$。</p>
-<p>首先易证，$G^{s}$ 是 $G$ 的子群。</p>
-<p>若 $\alpha,\beta\in G$，$\alpha*s=\beta*s$，</p>
-<p>$$<br>\beta^{-1}*(\alpha*s)=\beta^{-1}*(\beta*s)<br>$$</p>
-<p>$$<br>(\beta^{-1}\cdot\alpha)*s=s<br>$$</p>
-<p>$$<br>\alpha\in aG^s,x,y\in G^s,\alpha=a\cdot x<br>$$</p>
-<p>$$<br>\beta^{-1}\cdot\alpha=y,\beta^{-1}\cdot a\cdot x=y,\beta^{-1}\cdot a=y\cdot x^{-1}\in G^s<br>$$</p>
-<p>$$<br>\beta\in aG^s<br>$$</p>
-<p>则 $\alpha,\beta$ 在同一个 $G^s$ 的左陪集中。<br>$$<br>\alpha,\beta\in aG^s<br>$$</p>
-<p>$$<br>x,y\in G^s,\alpha=a\cdot x,\beta=a\cdot y<br>$$</p>
-<p>$$<br>\beta^{-1}\cdot\alpha=y^{-1}\cdot a^{-1}\cdot a\cdot x=y^{-1}\cdot x\in G^s<br>$$</p>
-<p>$$<br>\alpha*s=\beta*s<br>$$</p>
-<p>易得：$\left|G^s\right|=\frac{|G|}{L_s}$<br>$$<br>\sum_{\tau\in G}\left|X^\tau\right|=\sum_{s\in X}\left|G^s\right|=\sum_{s\in X}\frac{|G|}{|L_s|}<br>$$</p>
-<p>$$<br>=\sum_{L}\sum_{s\in L}\frac{|G|}{|L|}=|G||X/G|<br>$$</p>
-<p>证毕。</p>
-<h2 id="Polya-定理"><a href="#Polya-定理" class="headerlink" title="Polya 定理"></a>Polya 定理</h2><p>在染色问题中，如果一个位置可以有 $m$ 种颜色，则记 $c(\tau)$ 为 $\tau$ 中的循环数，则<br>$$<br>\left|X^\tau\right|=m^{c(\tau)}<br>$$</p>
-<h2 id="例"><a href="#例" class="headerlink" title="例"></a>例</h2><p><a href="https://www.luogu.com.cn/problem/P4980">P4980 【模板】Pólya 定理</a></p>
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">long</span> <span class="keyword">long</span> MOD=<span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> ntpr[<span class="number">32000</span>];</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> prim[<span class="number">10000</span>],nop=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">long</span> <span class="keyword">long</span> i=<span class="number">2</span>;i&lt;=<span class="number">31621</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(!ntpr[i])prim[++nop]=i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">long</span> <span class="keyword">long</span> j=<span class="number">1</span>;i*prim[j]&lt;=<span class="number">31621</span>&amp;&amp;j&lt;=nop;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(ntpr[i*prim[j]])<span class="keyword">break</span>;</span><br><span class="line">            ntpr[i*prim[j]]=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="title">phi</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> _)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> ret=_;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">long</span> <span class="keyword">long</span> i=<span class="number">1</span>;i&lt;=nop&amp;&amp;_&gt;<span class="number">1</span>&amp;&amp;prim[i]*prim[i]&lt;=_;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(!(_%prim[i]))ret-=ret/prim[i];</span><br><span class="line">        <span class="keyword">while</span>(!(_%prim[i]))_/=prim[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(_&gt;<span class="number">1</span>)ret-=ret/_;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="title">power</span><span class="params">(<span class="keyword">const</span> <span class="keyword">long</span> <span class="keyword">long</span> &amp;x,<span class="keyword">long</span> <span class="keyword">long</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> _=x,ret=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(y)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y&amp;<span class="number">1</span>)ret*=_,ret%=MOD;</span><br><span class="line">        _=_*_,_=_%MOD;</span><br><span class="line">        y&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">init</span>();</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> t,n,ans;</span><br><span class="line">    cin&gt;&gt;t;</span><br><span class="line">    <span class="keyword">for</span>(;t;t--)</span><br><span class="line">    &#123;</span><br><span class="line">        ans=<span class="number">0</span>;</span><br><span class="line">        cin&gt;&gt;n;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">long</span> <span class="keyword">long</span> i=<span class="number">1</span>;i*i&lt;=n;i++)<span class="keyword">if</span>(!(n%i))ans+=(i*i==n?(<span class="built_in">phi</span>(i)*<span class="built_in">power</span>(n,i<span class="number">-1</span>)):(<span class="built_in">phi</span>(n/i)*<span class="built_in">power</span>(n,i<span class="number">-1</span>)+<span class="built_in">phi</span>(i)*<span class="built_in">power</span>(n,n/i<span class="number">-1</span>))),ans%=MOD;</span><br><span class="line">        cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// cout&lt;&lt;phi(442908294)&lt;&lt;endl;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>OI</tag>
-        <tag>math</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CF346D Robot Control</title>
     <url>/2021/11/07/CF346D-Robot-Control/</url>
     <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><a href="https://www.luogu.com.cn/problem/CF346D">CF346D Robot Control</a></p>
@@ -111,7 +61,7 @@
 <h3 id="边"><a href="#边" class="headerlink" title="边"></a>边</h3><p>首先建一个生成树，边数 $O(n)$。</p>
 <p>如果在自动机上跑遍所有子串必然遍历到所有边，但我们不需要这样做。考虑到所有的子串都一定是某个后缀的前缀，因此只需跑所有的后缀。</p>
 <p>我们从 <code>lst</code> 出发，逆向跑回 1 节点。</p>
-<p>而在跑每一个后缀的时候，如果跑的时候发现走不通，就加一条应该走的边。注意到此时这条边所通向的的节点一定可以通向 1 节点（有树做基础），并且这样走由于经过了刚才新添加的边，因此一定是一个新的后缀。由此可以发现，每加一条边，至少可以多一个后缀。因此边也是 $O(n)$ 的。</p>
+<p>而在跑每一个后缀的时候，如果跑的时候发现走不通，就加一条应该走的边。注意到此时这条边所通向节点一定可以通向 1 节点（有树做基础），并且这样走由于经过了刚才新添加的边，因此一定是一个新的后缀。由此可以发现，每加一条边，至少可以多一个后缀。因此边也是 $O(n)$ 的。</p>
 <h3 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h3><p>注意到其中两个 <code>while</code> 是时间复杂度不确定的原因。</p>
 <p>对于：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>((x)&amp;&amp;(!sam[x].ch[c]))sam[x].ch[c]=lst,x=sam[x].fa;</span><br></pre></td></tr></table></figure>
@@ -174,135 +124,6 @@
 ]]></content>
       <tags>
         <tag>poem</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>序列合并</title>
-    <url>/2022/02/13/%E5%BA%8F%E5%88%97%E5%90%88%E5%B9%B6/</url>
-    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><img src="/2022/02/13/%E5%BA%8F%E5%88%97%E5%90%88%E5%B9%B6/1.png"></p>
-<p>$1&lt;n,m\le 10^3,m\le t\le 10^9$</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>考虑序列的第一位，如果该位确定，那么问题转化为求 $n-1$ 位问题。但这 $n-1$ 位中第一位可能会与整个序列第一位发生合并。此时序列的第一位发生变化，而我们需要这一位确定。故设 $p_{i,j}$ 为限制长度为 $i$，首位出现过 $j$ 的概率，即当该序列之前是 $j$ 时发生合并的概率，而在出现了 $j$ 前提下首位保持不变的概率为 $q_{i,j}$。如果第一位保持为 $j$，相当于有后 $i-1$ 位的首位未出现过 $j$，即 $q_{i,j}=1-p_{i-1,j}$。（$j=t$ 时特判，下文不再重复）</p>
-<p>当第一位出现了 $j$ 时，可能有两种情况：</p>
-<ol>
-<li>两个 $j-1$ 合并，即 $p_{i,j-1}\cdot p_{i-1,j-1}$</li>
-<li>直接加入 $j$，概率 $\frac{1}{m}$</li>
-</ol>
-<p>在第一位保持为 $j$ 的情况下考虑求解：设以此为前提，期望和为 $g_{i,j}$，则 $ans_i=\sum_{j=1}^{lim}p_{i,j}q_{i,j}g_{i,j}$。设 $f_{i,j}$ 为第一位产生 $j$ 前提下期望和，有：<br>$$<br>g_{i,j}=j+\frac{ans_{i-1}-p_{i-1,j}f_{i-1,j}}{q_{i,j}}<br>$$<br>考虑求 $f$。讨论 $j$ 是否保持不变，得：<br>$$<br>f_{i,j}=q_{i,j}g_{i,j}+(1-q_{i,j})f_{i,j+1}<br>$$<br>显然 $lim=\min(n+m-1,t)$，时间复杂度 $O(nm\log(10^9+7))$。但如果不求 $g_{i,j}$，而是求 $q_{i,j}g_{i,j}$，则可以做到 $O(nm)$。</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mod=<span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"><span class="keyword">int</span> p[<span class="number">1001</span>][<span class="number">2001</span>],q[<span class="number">1001</span>][<span class="number">2001</span>],g[<span class="number">2001</span>],f[<span class="number">2001</span>],ans;</span><br><span class="line"><span class="keyword">int</span> m,n,t,lim;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pow</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(y)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(y&amp;<span class="number">1</span>)ret=<span class="number">1LL</span>*ret*x%mod;</span><br><span class="line">		x=<span class="number">1LL</span>*x*x%mod;</span><br><span class="line">		y&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">freopen</span>(<span class="string">&quot;sequence.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">    <span class="built_in">freopen</span>(<span class="string">&quot;sequence.out&quot;</span>,<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;t);</span><br><span class="line">	lim=<span class="built_in">min</span>(n+m<span class="number">-1</span>,t);</span><br><span class="line">	<span class="keyword">int</span> m_1=<span class="built_in">pow</span>(m,mod<span class="number">-2</span>),an;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=lim;j++)p[i][j]=(<span class="number">1LL</span>*p[i][j<span class="number">-1</span>]*p[i<span class="number">-1</span>][j<span class="number">-1</span>]+<span class="number">1LL</span>*(j&lt;=m)*m_1)%mod,q[i][j]=(<span class="number">1</span>-(j&lt;lim)*p[i<span class="number">-1</span>][j]+mod)%mod;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=lim;i++)g[i]=f[i]=i,ans=(<span class="number">1LL</span>*p[<span class="number">1</span>][i]*q[<span class="number">1</span>][i]%mod*i+ans)%mod;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		an=ans;ans=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=lim;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> _=an-(j&lt;lim?<span class="number">1LL</span>*p[i<span class="number">-1</span>][j]*f[j]%mod:<span class="number">0</span>)+mod;</span><br><span class="line">			g[j]=(<span class="number">1LL</span>*q[i][j]*j+_)%mod;ans=(<span class="number">1LL</span>*p[i][j]*g[j]%mod+ans)%mod;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=lim;j;j--)f[j]=(<span class="number">1LL</span>*g[j]%mod+<span class="number">1LL</span>*(<span class="number">1</span>-q[i][j]+mod)*f[j+<span class="number">1</span>]%mod)%mod;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>此题转移的条件限定较强，因此转移时需要一个限定较多的 $g$。$p$ 和 $q$ 是跳板，连接没有限定的 $ans$ 和限定较多的 $g$。然而发现 $g$ 较难转移，因此放松一些限定，再加一个跳板 $f$。这应当对解决转移较困难的问题一些启示。</p>
-]]></content>
-      <tags>
-        <tag>OI</tag>
-        <tag>期望</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数论（2）</title>
-    <url>/2021/10/24/%E6%95%B0%E8%AE%BA%EF%BC%882%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="欧拉定理的推广"><a href="#欧拉定理的推广" class="headerlink" title="欧拉定理的推广"></a>欧拉定理的推广</h2><p>欧拉定理要求 $\gcd(a,m)=1$，因此在 $a,m$ 不互质时无法直接使用。对于 $a,m$，若 $gcd(m,a)\ne 1$ 且 $x&gt;\varphi(m)$，有<br>$$<br>a^x\equiv a^{x\mod\varphi(m)+\varphi(m)}\mod m<br>$$<br>证明：<br>$$<br>m=\prod_{i=1}^{n}p_i^{q_i},a=s\prod_{i=1}^{n}p_i^{k_i},\gcd(s,m)=1<br>$$</p>
-<p>$$<br>即证:t\ge1,a^{t\varphi(m)}\equiv s^{t\varphi(m)}\prod_{i=1}^{n}p_i^{t\varphi(m)k_i}\equiv a^{\varphi(m)}\mod m<br>$$</p>
-<p>$$<br>对于 k_i=0,p_i^{t\varphi(m)k_i}\equiv1\mod m<br>$$</p>
-<p>$$<br>\varphi(m)\ge\varphi(p_i^{q_i})=p_i^{q_i-1}(p_i-1)\ge2^{q_i-1}\ge q_i<br>$$</p>
-<p>$$<br>p_i^{b\varphi(m)}\equiv1 \mod \left(\frac{m}{p_i^{q_i}}\right),p_i^{b\varphi(m)+q_i}\equiv p_i^{q_i}\mod m<br>$$</p>
-<p>$$<br>p_i^{(b+1)\varphi(m)}\equiv p_i^{\varphi(m)}\mod m<br>$$</p>
-<p>显然，原命题成立。</p>
-<h3 id="例"><a href="#例" class="headerlink" title="例"></a>例</h3><p><a href="https://www.luogu.com.cn/problem/P4139">P4139 上帝与集合的正确用法</a></p>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>$$<br>2^{2^{2\cdots}}\equiv 2^{\left(2^{2\cdots}\mod\varphi(p)+\varphi(p)\right)}\equiv2^{\left(2^{\left(2^{2\cdots}\mod\varphi(\varphi(p))+\varphi(\varphi(p))\right)}\mod\varphi(p)+\varphi(p)\right)}\mod p<br>$$</p>
-<p>当 $\varphi(\varphi(\cdots\varphi(p)))=1$ 时，在往上的 $2$ 就对答案没有影响了，而容易看出，这些 $2$ 最多有 $\log$ 层。</p>
-<h4 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line">ll t,p;</span><br><span class="line">ll pri[<span class="number">700000</span>],phi[<span class="number">10000001</span>],cnt;</span><br><span class="line"><span class="keyword">bool</span> ntpr[<span class="number">10000001</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    phi[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=<span class="number">10000000</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="keyword">if</span>(!ntpr[i])</span><br><span class="line">        &#123;</span><br><span class="line">            pri[++cnt]=i;</span><br><span class="line">            phi[i]=i<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=cnt&amp;&amp;pri[j]*i&lt;=<span class="number">10000000</span>;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            ntpr[i*pri[j]]=<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(!(i%pri[j]))</span><br><span class="line">            &#123;</span><br><span class="line">                phi[i*pri[j]]=phi[i]*pri[j];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            phi[i*pri[j]]=phi[i]*phi[pri[j]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">quik_pow</span><span class="params">(ll a,ll b,ll mod)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ll ret=<span class="number">1</span>,_=a;</span><br><span class="line">    <span class="keyword">while</span>(b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(b&amp;<span class="number">1</span>)ret*=_,ret%=mod;</span><br><span class="line">        _=_*_,_%=mod;</span><br><span class="line">        b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">solv</span><span class="params">(ll _)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(_==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">1LL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">quik_pow</span>(<span class="number">2LL</span>,<span class="built_in">solv</span>(phi[_])+phi[_],_);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">init</span>();</span><br><span class="line">    cin&gt;&gt;t;</span><br><span class="line">    <span class="keyword">while</span>(t)</span><br><span class="line">    &#123;</span><br><span class="line">        t--;</span><br><span class="line">        cin&gt;&gt;p;</span><br><span class="line">        cout&lt;&lt;<span class="built_in">solv</span>(p)&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>OI</tag>
-        <tag>math</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>特征根法与特征值</title>
-    <url>/2021/08/06/%E7%89%B9%E5%BE%81%E6%A0%B9%E6%B3%95%E4%B8%8E%E7%89%B9%E5%BE%81%E5%80%BC/</url>
-    <content><![CDATA[<h2 id="数列"><a href="#数列" class="headerlink" title="数列"></a>数列</h2><p>对于数列 $a_n=pa_{n-1}+qa_{n-2}$，已知 $a_1,a_2$，求通项公式。</p>
-<p>对于此类问题，基本的思想是在等式两边制造同构。不妨设同构的部分是 $a_n-ta_{n-1}$，则：<br>$$<br>a_n-ta_{n-1}=(p-t)(a_{n-1}-ta_{n-2})-(t^2-pt-q)a_{n-2}<br>$$</p>
-<p>$$<br>\therefore t^2-pt-q=0<br>$$<br>$t^2-pt-q=0$ 称为数列 ${a_n}$ 的特征方程，其根称为 ${a_n}$ 的特征根。</p>
-<p>如果方程有不等两根（<strong>不是实根也可以</strong>），那么将推出的两个式子（分别用两根推出 $a_n-ta_{n-1}$ 的通项）作差，消去 $a_n$ 项。</p>
-<p>若方程两根相等，则 $t=\frac{p}{2},p-t=t$，最后可以整理出 $\frac{a_n}{t^n}$ 是等差数列。</p>
-<hr>
-<h2 id="微分方程"><a href="#微分方程" class="headerlink" title="微分方程"></a>微分方程</h2><p>特征根法同时也是解常系数齐次线性微分方程的方法。</p>
-<p>对于 $y’’-py’-qy=0$，设 $y’’-ry’=(p-r)(y’-ry’’)$，则 $r^2-pr-q=0$。</p>
-<p>若 $r_1\neq r_2,y=c_1e^{r_1x}+c_2e^{r_2x}$</p>
-<p>$r_1=r_2,y=(c_1+c_2x)e^{rx}$</p>
-<p>若有两复根 $a\pm bi,y=e^{ax}(c_1\cos bx+c_2\sin bx)$</p>
-<h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>一方面，两者的思想都在于构造同构；另一方面，事实上，对于 $a_n=pa_{n-1}+qa_{n-2}$，<br>$$<br>A_n=\left[\begin{array}{l}a_n\\a_{n-1}\end{array}\right],A_n=\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]\times A_{n-1}=\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]^{n-2}\times\left[\begin{array}{l}a_2\\a_1\end{array}\right]<br>$$</p>
-<p>$$<br>(\lambda-p)\lambda=q,\lambda^2-p\lambda-q=0.<br>$$<br>数列的特征根事实上是它所对应的矩阵的特征值。我们可以将 $\left[\begin{array}{l}a_2\\a_1\end{array}\right]$ 用两个特征向量表示（易知如果 $\lambda_1=\lambda_2$，那么 $\left[\begin{array}{l}a_2\\a_1\end{array}\right]$ 和 $\lambda$ 在同一直线上）本质上，这种作法是将一个向量的旋转和伸缩转化为在特征向量方向的伸缩。</p>
-<p>对于 $y’’-py’-qy=0$，<br>$$<br>\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]\times \left[\begin{array}{l}y’\\y\end{array}\right]=\left[\begin{array}{l}y’’\\y’\end{array}\right]<br>$$</p>
-<p>$$<br>\left[\begin{array}{l}y’\\y\end{array}\right]=e^{\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]x}\left[\begin{array}{l}y_0’\\y_0\end{array}\right]<br>$$<br>类比刚才的想法，将 $\left[\begin{array}{l}y_0’\\y_0\end{array}\right]$ 转化成特征向量来表示。</p>
-<p>矩阵本质上是对信息的组合加以抽象的产物。由于有更高的抽象程度，它可以被赋予更多的含义，找到不同事物的共同结构特点。同时无论是哪种方法其思想都在于构造统一的表示方法，可见抽象与统一大概是数学之魂吧。</p>
-]]></content>
-      <tags>
-        <tag>math</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>礼物购买</title>
-    <url>/2022/02/13/%E7%A4%BC%E7%89%A9%E8%B4%AD%E4%B9%B0/</url>
-    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><img src="/2022/02/13/%E7%A4%BC%E7%89%A9%E8%B4%AD%E4%B9%B0/1.png"></p>
-<p>$n\le 3000,m\le 300$</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>肯定是要算贡献的。</p>
-<p>考察一个礼物的贡献，用 $g_{i,j}$ 表示其贡献，即：第 $i$ 种礼物有 $j$ 个，期望被拿走的个数。</p>
-<p>考虑从 $g_{i,j}$ 转移到 $g_{i,j+1}$，发现这取决于喜欢这种礼物的人数。考虑有 $k$ 个人喜欢这种礼物的概率，用 $h_{i,j,k}$ 表示前 $j$ 个人中有 $k$ 个人喜欢 $i$ 礼物的概率。此时 $g_{i,j}=\sum_{x=0}^{n}\min (x,j)h_{i,n,x}$，进而 $g_{i,j}-g_{i,j-1}=\sum_{x=j}^nh_{i,n,x}$。</p>
-<p>进而买 $j$ 件前 $i$ 种礼物的期望值为：$f_{i,j}=\max(f_{i-1,j-x}+g_{i,x})$。发现 $g$ 的差分不增，故可以转换为贪心，每次寻找 $g$ 增量最大的种类。</p>
-<p>此时瓶颈在于求 $h$。<br>$$<br>h_{i,j,k}=(1-p)h_{i,j-1,k}+ph_{i,j-1,k-1}<br>$$<br>发现我们每次用一个 $\Delta g$ 更新后，只需知道 $\sum_{x=j}^nh_{i,n,x}$，而之前一定已经求过 $\sum_{x=j-1}^nh_{i,n,x}$，故只需求 $h_{i,n,j-1}$，而此前必求过 $h_{i,n,j-2}$，故可以递推，并不需要知道全部 $h$。</p>
-<p>复杂度是对的。</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n,m,cnt[<span class="number">301</span>];</span><br><span class="line"><span class="keyword">double</span> p[<span class="number">3001</span>][<span class="number">301</span>],g[<span class="number">301</span>],h[<span class="number">301</span>][<span class="number">3001</span>][<span class="number">2</span>],ans;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">upd</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;y;i++)h[x][i][y&amp;<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="built_in">max</span>(y,<span class="number">1</span>);i&lt;=n;i++)</span><br><span class="line">	h[x][i][y&amp;<span class="number">1</span>]=h[x][i<span class="number">-1</span>][(y&amp;<span class="number">1</span>)^<span class="number">1</span>]*p[i][x]+h[x][i<span class="number">-1</span>][y&amp;<span class="number">1</span>]*(<span class="number">1.0</span>-p[i][x]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">freopen</span>(<span class="string">&quot;coin.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">    <span class="built_in">freopen</span>(<span class="string">&quot;coin.out&quot;</span>,<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=m;j++)&#123;</span><br><span class="line">		<span class="keyword">int</span> _;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;_);p[i][j]=<span class="number">0.001</span>*_;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)h[i][<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1.0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)<span class="built_in">upd</span>(i,<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)g[i]=<span class="number">1</span>-h[i][n][<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> _=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">2</span>;j&lt;=m;j++)<span class="keyword">if</span>(g[j]&gt;g[_])_=j;</span><br><span class="line">		ans+=g[_];</span><br><span class="line">		<span class="built_in">upd</span>(_,++cnt[_]);g[_]-=h[_][n][cnt[_]&amp;<span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%.10lf\n&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <tags>
-        <tag>OI</tag>
-        <tag>期望</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数论（1）</title>
-    <url>/2021/10/02/%E6%95%B0%E8%AE%BA%EF%BC%881%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>若 $p$ 为质数，$a$ 不是 $p$ 的倍数，则 $a^{p-1}\equiv 1(\mod p)$</p>
-<p>证明：</p>
-<p>$0&lt;t&lt;p,ta$ 在 $\mod p$ 下互不相同，因为如果 $t\neq k,ta\equiv ka(\mod p),t\equiv k(\mod p)$</p>
-<p>故 $a^{p-1}(p-1)!\equiv(p-1)!(\mod p),a^{p-1}\equiv 1(\mod p)$</p>
-<h2 id="积性函数"><a href="#积性函数" class="headerlink" title="积性函数"></a>积性函数</h2><p>任意 $\gcd(m,n)=1$，有 $f(m)f(n)=f(mn)$，则 $f(x)$ 为积性函数。特殊地，若对任意 $m,n$ 都有 $f(m)f(n)=f(mn)$，则 $f(x)$ 为完全积性函数。</p>
-<p>注：常见的积性函数：</p>
-<ul>
-<li>$\epsilon(x)=[x=1]$</li>
-<li>$1(n)=1$</li>
-<li>$id_k(n)=n^k$</li>
-<li>$\sigma_k(n)=\sum_{d|n}d^k$</li>
-<li>$\varphi(n)$：一会要说的欧拉函数</li>
-<li>$\mu(n)$：以后会说的莫比乌斯函数</li>
-</ul>
-<h2 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h2><p>$\varphi(n)$ 为不超过 $n$ 且与 $n$ 互素的正整数的个数。</p>
-<ul>
-<li><p>$p 为素数\Leftrightarrow\varphi(p)=p-1$</p>
-</li>
-<li><p>$\sum_{d|m}\varphi\left(\frac{m}{d}\right)=m$<br>$$<br>\varphi(m)=\sum_{i=1}^m[\gcd(m,i)=1]=m-\sum_{d|m,d\ne1}\sum_{i=d}^m[\gcd(m,i)=d]<br>$$</p>
-<p>$$<br>=m-\sum_{d|m,d\ne1}\sum_{d|i}^m\left[\gcd\left(\frac{m}{d},\frac{i}{d}\right)=1\right]<br>$$</p>
-<p>$$<br>=m-\sum_{d|m,d\ne1}\varphi\left(\frac{m}{d}\right),\therefore\sum_{d|m}\varphi\left(\frac{m}{d}\right)=m<br>$$</p>
-</li>
-<li><p>$\gcd(m,n)=1,\varphi(m)\varphi(n)=\varphi(mn)$<br>$$<br>\varphi(m)=\sum_{i=1}^m[\gcd(m,i)=1],\varphi(mn)=\sum_{i=1}^{mn}[\gcd(mn,i)=1]<br>$$</p>
-<p>$$<br>=\sum_{i=1}^{mn}[\gcd(m,i)=1]\cdot[\gcd(n,i)=1]<br>$$</p>
-<p>$$<br>=\sum_{i=1}^{mn}[\gcd(m,i\mod m)=1][\gcd(n,i\mod n)=1]<br>$$</p>
-<p>$$<br>=\sum_{i=1}^m\left([\gcd(m,i)=1]\sum_{j=0}^{n-1}[\gcd(n,(mj+i)\mod n)=1] \right)<br>$$</p>
-<p>$$<br>=\sum_{i=1}^m\left([\gcd(m,i)=1]\sum_{j=1}^{n}[\gcd(n,j)=1] \right)<br>$$</p>
-<p>$$<br>=\sum_{i=1}^m[\gcd(m,i)=1]\sum_{j=1}^{n}[\gcd(n,j)=1]=\varphi(m)\varphi(n)<br>$$</p>
-<p>因此，欧拉函数是积性函数。</p>
-</li>
-</ul>
-<h2 id="欧拉定理"><a href="#欧拉定理" class="headerlink" title="欧拉定理"></a>欧拉定理</h2><p>若 $\gcd(a,m)=1$，则 $a^{\varphi(m)}\equiv1(\mod m)$</p>
-<p>证明与费马小定理类似。</p>
-]]></content>
-      <tags>
-        <tag>OI</tag>
-        <tag>math</tag>
       </tags>
   </entry>
   <entry>
@@ -966,6 +787,185 @@
 ]]></content>
       <tags>
         <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>序列合并</title>
+    <url>/2022/02/13/%E5%BA%8F%E5%88%97%E5%90%88%E5%B9%B6/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><img src="/2022/02/13/%E5%BA%8F%E5%88%97%E5%90%88%E5%B9%B6/1.png"></p>
+<p>$1&lt;n,m\le 10^3,m\le t\le 10^9$</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>考虑序列的第一位，如果该位确定，那么问题转化为求 $n-1$ 位问题。但这 $n-1$ 位中第一位可能会与整个序列第一位发生合并。此时序列的第一位发生变化，而我们需要这一位确定。故设 $p_{i,j}$ 为限制长度为 $i$，首位出现过 $j$ 的概率，即当该序列之前是 $j$ 时发生合并的概率，而在出现了 $j$ 前提下首位保持不变的概率为 $q_{i,j}$。如果第一位保持为 $j$，相当于有后 $i-1$ 位的首位未出现过 $j$，即 $q_{i,j}=1-p_{i-1,j}$。（$j=t$ 时特判，下文不再重复）</p>
+<p>当第一位出现了 $j$ 时，可能有两种情况：</p>
+<ol>
+<li>两个 $j-1$ 合并，即 $p_{i,j-1}\cdot p_{i-1,j-1}$</li>
+<li>直接加入 $j$，概率 $\frac{1}{m}$</li>
+</ol>
+<p>在第一位保持为 $j$ 的情况下考虑求解：设以此为前提，期望和为 $g_{i,j}$，则 $ans_i=\sum_{j=1}^{lim}p_{i,j}q_{i,j}g_{i,j}$。设 $f_{i,j}$ 为第一位产生 $j$ 前提下期望和，有：<br>$$<br>g_{i,j}=j+\frac{ans_{i-1}-p_{i-1,j}f_{i-1,j}}{q_{i,j}}<br>$$<br>考虑求 $f$。讨论 $j$ 是否保持不变，得：<br>$$<br>f_{i,j}=q_{i,j}g_{i,j}+(1-q_{i,j})f_{i,j+1}<br>$$<br>显然 $lim=\min(n+m-1,t)$，时间复杂度 $O(nm\log(10^9+7))$。但如果不求 $g_{i,j}$，而是求 $q_{i,j}g_{i,j}$，则可以做到 $O(nm)$。</p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mod=<span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"><span class="keyword">int</span> p[<span class="number">1001</span>][<span class="number">2001</span>],q[<span class="number">1001</span>][<span class="number">2001</span>],g[<span class="number">2001</span>],f[<span class="number">2001</span>],ans;</span><br><span class="line"><span class="keyword">int</span> m,n,t,lim;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pow</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(y)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(y&amp;<span class="number">1</span>)ret=<span class="number">1LL</span>*ret*x%mod;</span><br><span class="line">		x=<span class="number">1LL</span>*x*x%mod;</span><br><span class="line">		y&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">freopen</span>(<span class="string">&quot;sequence.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">    <span class="built_in">freopen</span>(<span class="string">&quot;sequence.out&quot;</span>,<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;t);</span><br><span class="line">	lim=<span class="built_in">min</span>(n+m<span class="number">-1</span>,t);</span><br><span class="line">	<span class="keyword">int</span> m_1=<span class="built_in">pow</span>(m,mod<span class="number">-2</span>),an;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=lim;j++)p[i][j]=(<span class="number">1LL</span>*p[i][j<span class="number">-1</span>]*p[i<span class="number">-1</span>][j<span class="number">-1</span>]+<span class="number">1LL</span>*(j&lt;=m)*m_1)%mod,q[i][j]=(<span class="number">1</span>-(j&lt;lim)*p[i<span class="number">-1</span>][j]+mod)%mod;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=lim;i++)g[i]=f[i]=i,ans=(<span class="number">1LL</span>*p[<span class="number">1</span>][i]*q[<span class="number">1</span>][i]%mod*i+ans)%mod;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		an=ans;ans=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=lim;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> _=an-(j&lt;lim?<span class="number">1LL</span>*p[i<span class="number">-1</span>][j]*f[j]%mod:<span class="number">0</span>)+mod;</span><br><span class="line">			g[j]=(<span class="number">1LL</span>*q[i][j]*j+_)%mod;ans=(<span class="number">1LL</span>*p[i][j]*g[j]%mod+ans)%mod;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=lim;j;j--)f[j]=(<span class="number">1LL</span>*g[j]%mod+<span class="number">1LL</span>*(<span class="number">1</span>-q[i][j]+mod)*f[j+<span class="number">1</span>]%mod)%mod;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>此题转移的条件限定较强，因此转移时需要一个限定较多的 $g$。$p$ 和 $q$ 是跳板，连接没有限定的 $ans$ 和限定较多的 $g$。然而发现 $g$ 较难转移，因此放松一些限定，再加一个跳板 $f$。这应当对解决转移较困难的问题一些启示。</p>
+]]></content>
+      <tags>
+        <tag>OI</tag>
+        <tag>期望</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数论（1）</title>
+    <url>/2021/10/02/%E6%95%B0%E8%AE%BA%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>若 $p$ 为质数，$a$ 不是 $p$ 的倍数，则 $a^{p-1}\equiv 1(\mod p)$</p>
+<p>证明：</p>
+<p>$0&lt;t&lt;p,ta$ 在 $\mod p$ 下互不相同，因为如果 $t\neq k,ta\equiv ka(\mod p),t\equiv k(\mod p)$</p>
+<p>故 $a^{p-1}(p-1)!\equiv(p-1)!(\mod p),a^{p-1}\equiv 1(\mod p)$</p>
+<h2 id="积性函数"><a href="#积性函数" class="headerlink" title="积性函数"></a>积性函数</h2><p>任意 $\gcd(m,n)=1$，有 $f(m)f(n)=f(mn)$，则 $f(x)$ 为积性函数。特殊地，若对任意 $m,n$ 都有 $f(m)f(n)=f(mn)$，则 $f(x)$ 为完全积性函数。</p>
+<p>注：常见的积性函数：</p>
+<ul>
+<li>$\epsilon(x)=[x=1]$</li>
+<li>$1(n)=1$</li>
+<li>$id_k(n)=n^k$</li>
+<li>$\sigma_k(n)=\sum_{d|n}d^k$</li>
+<li>$\varphi(n)$：一会要说的欧拉函数</li>
+<li>$\mu(n)$：以后会说的莫比乌斯函数</li>
+</ul>
+<h2 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h2><p>$\varphi(n)$ 为不超过 $n$ 且与 $n$ 互素的正整数的个数。</p>
+<ul>
+<li><p>$p 为素数\Leftrightarrow\varphi(p)=p-1$</p>
+</li>
+<li><p>$\sum_{d|m}\varphi\left(\frac{m}{d}\right)=m$<br>$$<br>\varphi(m)=\sum_{i=1}^m[\gcd(m,i)=1]=m-\sum_{d|m,d\ne1}\sum_{i=d}^m[\gcd(m,i)=d]<br>$$</p>
+<p>$$<br>=m-\sum_{d|m,d\ne1}\sum_{d|i}^m\left[\gcd\left(\frac{m}{d},\frac{i}{d}\right)=1\right]<br>$$</p>
+<p>$$<br>=m-\sum_{d|m,d\ne1}\varphi\left(\frac{m}{d}\right),\therefore\sum_{d|m}\varphi\left(\frac{m}{d}\right)=m<br>$$</p>
+</li>
+<li><p>$\gcd(m,n)=1,\varphi(m)\varphi(n)=\varphi(mn)$<br>$$<br>\varphi(m)=\sum_{i=1}^m[\gcd(m,i)=1],\varphi(mn)=\sum_{i=1}^{mn}[\gcd(mn,i)=1]<br>$$</p>
+<p>$$<br>=\sum_{i=1}^{mn}[\gcd(m,i)=1]\cdot[\gcd(n,i)=1]<br>$$</p>
+<p>$$<br>=\sum_{i=1}^{mn}[\gcd(m,i\mod m)=1][\gcd(n,i\mod n)=1]<br>$$</p>
+<p>$$<br>=\sum_{i=1}^m\left([\gcd(m,i)=1]\sum_{j=0}^{n-1}[\gcd(n,(mj+i)\mod n)=1] \right)<br>$$</p>
+<p>$$<br>=\sum_{i=1}^m\left([\gcd(m,i)=1]\sum_{j=1}^{n}[\gcd(n,j)=1] \right)<br>$$</p>
+<p>$$<br>=\sum_{i=1}^m[\gcd(m,i)=1]\sum_{j=1}^{n}[\gcd(n,j)=1]=\varphi(m)\varphi(n)<br>$$</p>
+<p>因此，欧拉函数是积性函数。</p>
+</li>
+</ul>
+<h2 id="欧拉定理"><a href="#欧拉定理" class="headerlink" title="欧拉定理"></a>欧拉定理</h2><p>若 $\gcd(a,m)=1$，则 $a^{\varphi(m)}\equiv1(\mod m)$</p>
+<p>证明与费马小定理类似。</p>
+]]></content>
+      <tags>
+        <tag>OI</tag>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数论（2）</title>
+    <url>/2021/10/24/%E6%95%B0%E8%AE%BA%EF%BC%882%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="欧拉定理的推广"><a href="#欧拉定理的推广" class="headerlink" title="欧拉定理的推广"></a>欧拉定理的推广</h2><p>欧拉定理要求 $\gcd(a,m)=1$，因此在 $a,m$ 不互质时无法直接使用。对于 $a,m$，若 $gcd(m,a)\ne 1$ 且 $x&gt;\varphi(m)$，有<br>$$<br>a^x\equiv a^{x\mod\varphi(m)+\varphi(m)}\mod m<br>$$<br>证明：<br>$$<br>m=\prod_{i=1}^{n}p_i^{q_i},a=s\prod_{i=1}^{n}p_i^{k_i},\gcd(s,m)=1<br>$$</p>
+<p>$$<br>即证:t\ge1,a^{t\varphi(m)}\equiv s^{t\varphi(m)}\prod_{i=1}^{n}p_i^{t\varphi(m)k_i}\equiv a^{\varphi(m)}\mod m<br>$$</p>
+<p>$$<br>对于 k_i=0,p_i^{t\varphi(m)k_i}\equiv1\mod m<br>$$</p>
+<p>$$<br>\varphi(m)\ge\varphi(p_i^{q_i})=p_i^{q_i-1}(p_i-1)\ge2^{q_i-1}\ge q_i<br>$$</p>
+<p>$$<br>p_i^{b\varphi(m)}\equiv1 \mod \left(\frac{m}{p_i^{q_i}}\right),p_i^{b\varphi(m)+q_i}\equiv p_i^{q_i}\mod m<br>$$</p>
+<p>$$<br>p_i^{(b+1)\varphi(m)}\equiv p_i^{\varphi(m)}\mod m<br>$$</p>
+<p>显然，原命题成立。</p>
+<h3 id="例"><a href="#例" class="headerlink" title="例"></a>例</h3><p><a href="https://www.luogu.com.cn/problem/P4139">P4139 上帝与集合的正确用法</a></p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>$$<br>2^{2^{2\cdots}}\equiv 2^{\left(2^{2\cdots}\mod\varphi(p)+\varphi(p)\right)}\equiv2^{\left(2^{\left(2^{2\cdots}\mod\varphi(\varphi(p))+\varphi(\varphi(p))\right)}\mod\varphi(p)+\varphi(p)\right)}\mod p<br>$$</p>
+<p>当 $\varphi(\varphi(\cdots\varphi(p)))=1$ 时，在往上的 $2$ 就对答案没有影响了，而容易看出，这些 $2$ 最多有 $\log$ 层。</p>
+<h4 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line">ll t,p;</span><br><span class="line">ll pri[<span class="number">700000</span>],phi[<span class="number">10000001</span>],cnt;</span><br><span class="line"><span class="keyword">bool</span> ntpr[<span class="number">10000001</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    phi[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=<span class="number">10000000</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="keyword">if</span>(!ntpr[i])</span><br><span class="line">        &#123;</span><br><span class="line">            pri[++cnt]=i;</span><br><span class="line">            phi[i]=i<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=cnt&amp;&amp;pri[j]*i&lt;=<span class="number">10000000</span>;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            ntpr[i*pri[j]]=<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(!(i%pri[j]))</span><br><span class="line">            &#123;</span><br><span class="line">                phi[i*pri[j]]=phi[i]*pri[j];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            phi[i*pri[j]]=phi[i]*phi[pri[j]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">quik_pow</span><span class="params">(ll a,ll b,ll mod)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ll ret=<span class="number">1</span>,_=a;</span><br><span class="line">    <span class="keyword">while</span>(b)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(b&amp;<span class="number">1</span>)ret*=_,ret%=mod;</span><br><span class="line">        _=_*_,_%=mod;</span><br><span class="line">        b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">solv</span><span class="params">(ll _)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(_==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">1LL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">quik_pow</span>(<span class="number">2LL</span>,<span class="built_in">solv</span>(phi[_])+phi[_],_);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">init</span>();</span><br><span class="line">    cin&gt;&gt;t;</span><br><span class="line">    <span class="keyword">while</span>(t)</span><br><span class="line">    &#123;</span><br><span class="line">        t--;</span><br><span class="line">        cin&gt;&gt;p;</span><br><span class="line">        cout&lt;&lt;<span class="built_in">solv</span>(p)&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>OI</tag>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>特征根法与特征值</title>
+    <url>/2021/08/06/%E7%89%B9%E5%BE%81%E6%A0%B9%E6%B3%95%E4%B8%8E%E7%89%B9%E5%BE%81%E5%80%BC/</url>
+    <content><![CDATA[<h2 id="数列"><a href="#数列" class="headerlink" title="数列"></a>数列</h2><p>对于数列 $a_n=pa_{n-1}+qa_{n-2}$，已知 $a_1,a_2$，求通项公式。</p>
+<p>对于此类问题，基本的思想是在等式两边制造同构。不妨设同构的部分是 $a_n-ta_{n-1}$，则：<br>$$<br>a_n-ta_{n-1}=(p-t)(a_{n-1}-ta_{n-2})-(t^2-pt-q)a_{n-2}<br>$$</p>
+<p>$$<br>\therefore t^2-pt-q=0<br>$$<br>$t^2-pt-q=0$ 称为数列 ${a_n}$ 的特征方程，其根称为 ${a_n}$ 的特征根。</p>
+<p>如果方程有不等两根（<strong>不是实根也可以</strong>），那么将推出的两个式子（分别用两根推出 $a_n-ta_{n-1}$ 的通项）作差，消去 $a_n$ 项。</p>
+<p>若方程两根相等，则 $t=\frac{p}{2},p-t=t$，最后可以整理出 $\frac{a_n}{t^n}$ 是等差数列。</p>
+<hr>
+<h2 id="微分方程"><a href="#微分方程" class="headerlink" title="微分方程"></a>微分方程</h2><p>特征根法同时也是解常系数齐次线性微分方程的方法。</p>
+<p>对于 $y’’-py’-qy=0$，设 $y’’-ry’=(p-r)(y’-ry’’)$，则 $r^2-pr-q=0$。</p>
+<p>若 $r_1\neq r_2,y=c_1e^{r_1x}+c_2e^{r_2x}$</p>
+<p>$r_1=r_2,y=(c_1+c_2x)e^{rx}$</p>
+<p>若有两复根 $a\pm bi,y=e^{ax}(c_1\cos bx+c_2\sin bx)$</p>
+<h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>一方面，两者的思想都在于构造同构；另一方面，事实上，对于 $a_n=pa_{n-1}+qa_{n-2}$，<br>$$<br>A_n=\left[\begin{array}{l}a_n\\a_{n-1}\end{array}\right],A_n=\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]\times A_{n-1}=\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]^{n-2}\times\left[\begin{array}{l}a_2\\a_1\end{array}\right]<br>$$</p>
+<p>$$<br>(\lambda-p)\lambda=q,\lambda^2-p\lambda-q=0.<br>$$<br>数列的特征根事实上是它所对应的矩阵的特征值。我们可以将 $\left[\begin{array}{l}a_2\\a_1\end{array}\right]$ 用两个特征向量表示（易知如果 $\lambda_1=\lambda_2$，那么 $\left[\begin{array}{l}a_2\\a_1\end{array}\right]$ 和 $\lambda$ 在同一直线上）本质上，这种作法是将一个向量的旋转和伸缩转化为在特征向量方向的伸缩。</p>
+<p>对于 $y’’-py’-qy=0$，<br>$$<br>\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]\times \left[\begin{array}{l}y’\\y\end{array}\right]=\left[\begin{array}{l}y’’\\y’\end{array}\right]<br>$$</p>
+<p>$$<br>\left[\begin{array}{l}y’\\y\end{array}\right]=e^{\left[\begin{array}{l}p&amp;q\\1&amp;0\end{array}\right]x}\left[\begin{array}{l}y_0’\\y_0\end{array}\right]<br>$$<br>类比刚才的想法，将 $\left[\begin{array}{l}y_0’\\y_0\end{array}\right]$ 转化成特征向量来表示。</p>
+<p>矩阵本质上是对信息的组合加以抽象的产物。由于有更高的抽象程度，它可以被赋予更多的含义，找到不同事物的共同结构特点。同时无论是哪种方法其思想都在于构造统一的表示方法，可见抽象与统一大概是数学之魂吧。</p>
+]]></content>
+      <tags>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Burnside 引理与 Polya 定理</title>
+    <url>/2021/10/31/Burnside-%E5%BC%95%E7%90%86%E4%B8%8E-Polya-%E5%AE%9A%E7%90%86/</url>
+    <content><![CDATA[<h2 id="置换群"><a href="#置换群" class="headerlink" title="置换群"></a>置换群</h2><ol>
+<li><p>置换：置换是一个集合映至自身的双射。$(a_1,a_2,\cdots,a_n)$ 表示将原数列的第 $a_i$ 个数在此置换作用下变到第 $i$ 个位置。</p>
+</li>
+<li><p>对于状态 $s$ 和置换 $f$，记 $f*s$ 为将 $f$ 作用于 $s$ 所得到的状态。</p>
+</li>
+<li><p>定义置换的乘法：$f\cdot g$ 表示显作用 $g$ 再作用 $f$。</p>
+</li>
+<li><p>置换群：有限集合上的一些置换组成的集合在置换的乘法下组成的群。</p>
+</li>
+<li><p>等价类：若状态组成的集合 $X$ 中的元素经过置换群 $G$ 中的置换作用后可以变成相同的状态，则这些状态属于一个等价类。等价类组成的集合记为 $X/G$。</p>
+</li>
+<li><p>循环：如果一个置换 $f=(a_1,a_2,\cdots,a_n)$，存在 $k$ 个元素使得 $a_{x_1}=x_2,a_{x_2}=x_3,\cdots,a_{x_k}=x_1$，则称 $x_1,x_2,\cdots,x_k$ 为一个长度为 $k$ 的循环。一个置换可以被拆分为一些不相交的循环，如：<br>$$<br>(6,5,7,4,1,2,3)=(1,6,2,5)\circ(3,7)\circ(4)<br>$$</p>
+</li>
+<li><p>轨道与稳定子：<br>$$<br>X^{\tau}={s|s\in X,\tau*s=s}<br>$$</p>
+<p>$$<br>G(s)={\tau*s|\tau\in G}<br>$$</p>
+<p>$G(s)$ 称为 $s$ 的<strong>轨道</strong>。<br>$$<br>G^s={\tau|\tau*s=s}<br>$$<br>$G^s$ 称为 $s$ 的<strong>稳定子</strong>。</p>
+</li>
+</ol>
+<h2 id="Burnside-引理"><a href="#Burnside-引理" class="headerlink" title="Burnside 引理"></a>Burnside 引理</h2><p>$$<br>\left|X/G\right|=\frac{\sum_{\tau\in G}\left|X^\tau\right|}{\left|G\right|}<br>$$</p>
+<p>证明：<br>$$<br>\sum_{\tau\in G}\left|X^\tau\right|=\sum_{\tau\in G}\sum_{s\in X}[\tau*s=s]<br>$$</p>
+<p>$$<br>=\sum_{s\in X}\sum_{\tau\in G}[\tau*s=s]=\sum_{s\in X}\left|G^s\right|<br>$$</p>
+<p>注意到，$s$ 所在的等价类的大小（记为 $|L_s|$）为 $\tau*s$ 的所有可能结果数。</p>
+<p>联想拉格朗日定理，可以猜想：$\left|G^s\right|=\frac{|G|}{|L_s|}$。</p>
+<p>首先易证，$G^{s}$ 是 $G$ 的子群。</p>
+<p>若 $\alpha,\beta\in G$，$\alpha*s=\beta*s$，</p>
+<p>$$<br>\beta^{-1}*(\alpha*s)=\beta^{-1}*(\beta*s)<br>$$</p>
+<p>$$<br>(\beta^{-1}\cdot\alpha)*s=s<br>$$</p>
+<p>$$<br>\alpha\in aG^s,x,y\in G^s,\alpha=a\cdot x<br>$$</p>
+<p>$$<br>\beta^{-1}\cdot\alpha=y,\beta^{-1}\cdot a\cdot x=y,\beta^{-1}\cdot a=y\cdot x^{-1}\in G^s<br>$$</p>
+<p>$$<br>\beta\in aG^s<br>$$</p>
+<p>则 $\alpha,\beta$ 在同一个 $G^s$ 的左陪集中。<br>$$<br>\alpha,\beta\in aG^s<br>$$</p>
+<p>$$<br>x,y\in G^s,\alpha=a\cdot x,\beta=a\cdot y<br>$$</p>
+<p>$$<br>\beta^{-1}\cdot\alpha=y^{-1}\cdot a^{-1}\cdot a\cdot x=y^{-1}\cdot x\in G^s<br>$$</p>
+<p>$$<br>\alpha*s=\beta*s<br>$$</p>
+<p>易得：$\left|G^s\right|=\frac{|G|}{L_s}$<br>$$<br>\sum_{\tau\in G}\left|X^\tau\right|=\sum_{s\in X}\left|G^s\right|=\sum_{s\in X}\frac{|G|}{|L_s|}<br>$$</p>
+<p>$$<br>=\sum_{L}\sum_{s\in L}\frac{|G|}{|L|}=|G||X/G|<br>$$</p>
+<p>证毕。</p>
+<h2 id="Polya-定理"><a href="#Polya-定理" class="headerlink" title="Polya 定理"></a>Polya 定理</h2><p>在染色问题中，如果一个位置可以有 $m$ 种颜色，则记 $c(\tau)$ 为 $\tau$ 中的循环数，则<br>$$<br>\left|X^\tau\right|=m^{c(\tau)}<br>$$</p>
+<h2 id="例"><a href="#例" class="headerlink" title="例"></a>例</h2><p><a href="https://www.luogu.com.cn/problem/P4980">P4980 【模板】Pólya 定理</a></p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">long</span> <span class="keyword">long</span> MOD=<span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> ntpr[<span class="number">32000</span>];</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> prim[<span class="number">10000</span>],nop=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">long</span> <span class="keyword">long</span> i=<span class="number">2</span>;i&lt;=<span class="number">31621</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(!ntpr[i])prim[++nop]=i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">long</span> <span class="keyword">long</span> j=<span class="number">1</span>;i*prim[j]&lt;=<span class="number">31621</span>&amp;&amp;j&lt;=nop;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(ntpr[i*prim[j]])<span class="keyword">break</span>;</span><br><span class="line">            ntpr[i*prim[j]]=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="title">phi</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> _)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> ret=_;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">long</span> <span class="keyword">long</span> i=<span class="number">1</span>;i&lt;=nop&amp;&amp;_&gt;<span class="number">1</span>&amp;&amp;prim[i]*prim[i]&lt;=_;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(!(_%prim[i]))ret-=ret/prim[i];</span><br><span class="line">        <span class="keyword">while</span>(!(_%prim[i]))_/=prim[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(_&gt;<span class="number">1</span>)ret-=ret/_;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="title">power</span><span class="params">(<span class="keyword">const</span> <span class="keyword">long</span> <span class="keyword">long</span> &amp;x,<span class="keyword">long</span> <span class="keyword">long</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> _=x,ret=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(y)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y&amp;<span class="number">1</span>)ret*=_,ret%=MOD;</span><br><span class="line">        _=_*_,_=_%MOD;</span><br><span class="line">        y&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">init</span>();</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> t,n,ans;</span><br><span class="line">    cin&gt;&gt;t;</span><br><span class="line">    <span class="keyword">for</span>(;t;t--)</span><br><span class="line">    &#123;</span><br><span class="line">        ans=<span class="number">0</span>;</span><br><span class="line">        cin&gt;&gt;n;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">long</span> <span class="keyword">long</span> i=<span class="number">1</span>;i*i&lt;=n;i++)<span class="keyword">if</span>(!(n%i))ans+=(i*i==n?(<span class="built_in">phi</span>(i)*<span class="built_in">power</span>(n,i<span class="number">-1</span>)):(<span class="built_in">phi</span>(n/i)*<span class="built_in">power</span>(n,i<span class="number">-1</span>)+<span class="built_in">phi</span>(i)*<span class="built_in">power</span>(n,n/i<span class="number">-1</span>))),ans%=MOD;</span><br><span class="line">        cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// cout&lt;&lt;phi(442908294)&lt;&lt;endl;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>OI</tag>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>礼物购买</title>
+    <url>/2022/02/13/%E7%A4%BC%E7%89%A9%E8%B4%AD%E4%B9%B0/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><img src="/2022/02/13/%E7%A4%BC%E7%89%A9%E8%B4%AD%E4%B9%B0/1.png"></p>
+<p>$n\le 3000,m\le 300$</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>肯定是要算贡献的。</p>
+<p>考察一个礼物的贡献，用 $g_{i,j}$ 表示其贡献，即：第 $i$ 种礼物有 $j$ 个，期望被拿走的个数。</p>
+<p>考虑从 $g_{i,j}$ 转移到 $g_{i,j+1}$，发现这取决于喜欢这种礼物的人数。考虑有 $k$ 个人喜欢这种礼物的概率，用 $h_{i,j,k}$ 表示前 $j$ 个人中有 $k$ 个人喜欢 $i$ 礼物的概率。此时 $g_{i,j}=\sum_{x=0}^{n}\min (x,j)h_{i,n,x}$，进而 $g_{i,j}-g_{i,j-1}=\sum_{x=j}^nh_{i,n,x}$。</p>
+<p>进而买 $j$ 件前 $i$ 种礼物的期望值为：$f_{i,j}=\max(f_{i-1,j-x}+g_{i,x})$。发现 $g$ 的差分不增，故可以转换为贪心，每次寻找 $g$ 增量最大的种类。</p>
+<p>此时瓶颈在于求 $h$。<br>$$<br>h_{i,j,k}=(1-p)h_{i,j-1,k}+ph_{i,j-1,k-1}<br>$$<br>发现我们每次用一个 $\Delta g$ 更新后，只需知道 $\sum_{x=j}^nh_{i,n,x}$，而之前一定已经求过 $\sum_{x=j-1}^nh_{i,n,x}$，故只需求 $h_{i,n,j-1}$，而此前必求过 $h_{i,n,j-2}$，故可以递推，并不需要知道全部 $h$。</p>
+<p>复杂度是对的。</p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n,m,cnt[<span class="number">301</span>];</span><br><span class="line"><span class="keyword">double</span> p[<span class="number">3001</span>][<span class="number">301</span>],g[<span class="number">301</span>],h[<span class="number">301</span>][<span class="number">3001</span>][<span class="number">2</span>],ans;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">upd</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;y;i++)h[x][i][y&amp;<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="built_in">max</span>(y,<span class="number">1</span>);i&lt;=n;i++)</span><br><span class="line">	h[x][i][y&amp;<span class="number">1</span>]=h[x][i<span class="number">-1</span>][(y&amp;<span class="number">1</span>)^<span class="number">1</span>]*p[i][x]+h[x][i<span class="number">-1</span>][y&amp;<span class="number">1</span>]*(<span class="number">1.0</span>-p[i][x]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">freopen</span>(<span class="string">&quot;coin.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">    <span class="built_in">freopen</span>(<span class="string">&quot;coin.out&quot;</span>,<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=m;j++)&#123;</span><br><span class="line">		<span class="keyword">int</span> _;<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;_);p[i][j]=<span class="number">0.001</span>*_;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)h[i][<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1.0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)<span class="built_in">upd</span>(i,<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)g[i]=<span class="number">1</span>-h[i][n][<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> _=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">2</span>;j&lt;=m;j++)<span class="keyword">if</span>(g[j]&gt;g[_])_=j;</span><br><span class="line">		ans+=g[_];</span><br><span class="line">		<span class="built_in">upd</span>(_,++cnt[_]);g[_]-=h[_][n][cnt[_]&amp;<span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%.10lf\n&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <tags>
+        <tag>OI</tag>
+        <tag>期望</tag>
       </tags>
   </entry>
 </search>
