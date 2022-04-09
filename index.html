@@ -181,6 +181,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lijinrui299792458.github.io/2022/04/09/NOI-Online-2022-%E6%B8%B8%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lijinrui299792458">
+      <meta itemprop="description" content="落叶吹进深谷，歌声却没有归宿。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lijinrui299792458">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/09/NOI-Online-2022-%E6%B8%B8%E8%AE%B0/" class="post-title-link" itemprop="url">NOI Online 2022 游记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-09 19:28:11 / 修改时间：20:17:08" itemprop="dateCreated datePublished" datetime="2022-04-09T19:28:11+08:00">2022-04-09</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="T1-丹钓战"><a href="#T1-丹钓战" class="headerlink" title="T1 丹钓战"></a><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P8251">T1 丹钓战</a></h2><p>水题，直接单调栈（谐音梗）。</p>
+<p>考虑从 $[l,n]$ 转移到 $[l-1,n]$ ，注意到除了 $l$，<strong>只有在前一区间中出现在了栈顶，才有可能在新区间中出现在栈顶</strong>。维护在区间中所有出现在 $S$ 栈顶的元素，考虑 $l-1$ 对其影响：从前至后弹出不能导致 $l-1$ 弹出的元素，直到一个元素弹出了 $l-1$，此后 $l-1$ 对该区间无影响。</p>
+<p>在计算到 $[l,n]$ 时，计算出所有 $[l,r]$，维护的是单调的位置序列，$r$ 对序列没有影响，二分 lowerbound 即可。</p>
+<h3 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h3><p>$O(n\log n)$</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; pii;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mxn=<span class="number">500005</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n,q;</span><br><span class="line"><span class="keyword">int</span> a[mxn],b[mxn],pos[mxn],ans[mxn];</span><br><span class="line">pair&lt;pii,<span class="keyword">int</span>&gt; qu[mxn];</span><br><span class="line"><span class="keyword">int</span> t[mxn],l;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">0</span>;<span class="keyword">char</span> c=<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">while</span>(c&gt;<span class="string">&#x27;9&#x27;</span>||c&lt;<span class="string">&#x27;0&#x27;</span>)c=<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">while</span>(c&lt;=<span class="string">&#x27;9&#x27;</span>&amp;&amp;c&gt;=<span class="string">&#x27;0&#x27;</span>)ret=ret*<span class="number">10</span>+c-<span class="string">&#x27;0&#x27;</span>,c=<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> L,<span class="keyword">int</span> R,<span class="keyword">int</span> v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> mid;</span><br><span class="line">	<span class="keyword">while</span>(L&lt;=R)</span><br><span class="line">	&#123;</span><br><span class="line">		mid=L+R&gt;&gt;<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(t[mid]&gt;v)R=mid<span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">else</span> L=mid+<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> R;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">//	freopen(&quot;stack.in&quot;,&quot;r&quot;,stdin);</span></span><br><span class="line"><span class="comment">//	freopen(&quot;stack.out&quot;,&quot;w&quot;,stdout);</span></span><br><span class="line">	n=<span class="built_in">read</span>(),q=<span class="built_in">read</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)a[i]=<span class="built_in">read</span>();<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)b[i]=<span class="built_in">read</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=q;i++)qu[i].first.first=-<span class="built_in">read</span>(),qu[i].first.second=<span class="built_in">read</span>(),qu[i].second=i;</span><br><span class="line">	<span class="built_in">sort</span>(qu+<span class="number">1</span>,qu+q+<span class="number">1</span>);l=n+<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n,j=<span class="number">1</span>,an;i&amp;&amp;(j&lt;=q);i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(l&lt;=n&amp;&amp;b[i]&gt;b[t[l]]&amp;&amp;a[t[l]]!=a[i])</span><br><span class="line">		++l;</span><br><span class="line">		t[--l]=i;an=l;</span><br><span class="line">		<span class="keyword">for</span>(;j&lt;=q&amp;&amp;qu[j].first.first==(-i);j++)</span><br><span class="line">		&#123;</span><br><span class="line">			an=<span class="built_in">find</span>(an,n,qu[j].first.second);</span><br><span class="line">			ans[qu[j].second]=an-l+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=q;i++)<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="T2-讨论"><a href="#T2-讨论" class="headerlink" title="T2 讨论"></a><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P8252">T2 讨论</a></h2><p>假设我们有一个容器，向其中一个一个加入这些集合。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/09/NOI-Online-2022-%E6%B8%B8%E8%AE%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://lijinrui299792458.github.io/2022/03/06/%E6%A0%91%E4%B8%8A%E7%A7%BB%E5%8A%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -365,7 +437,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-06 14:22:00" itemprop="dateModified" datetime="2022-03-06T14:22:00+08:00">2022-03-06</time>
+                <time title="修改时间：2022-04-08 18:34:44" itemprop="dateModified" datetime="2022-04-08T18:34:44+08:00">2022-04-08</time>
               </span>
 
           
@@ -381,7 +453,7 @@
       
           <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><img src="/2022/02/13/%E5%BA%8F%E5%88%97%E5%90%88%E5%B9%B6/1.png"></p>
 <p>$1&lt;n,m\le 10^3,m\le t\le 10^9$</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>考虑序列的第一位，如果该位确定，那么问题转化为求 $n-1$ 位问题。但这 $n-1$ 位中第一位可能会与整个序列第一位发生合并。此时序列的第一位发生变化，而我们需要这一位确定。故设 $p_{i,j}$ 为限制长度为 $i$，首位出现过 $j$ 的概率，即当该序列之前是 $j$ 时发生合并的概率，而在出现了 $j$ 前提下首位保持不变的概率为 $q_{i,j}$。如果第一位保持为 $j$，相当于有后 $i-1$ 位的首位未出现过 $j$，即 $q_{i,j}=1-p_{i-1,j}$。（$j=t$ 时特判，下文不再重复）</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>考虑序列的第一位，如果该位确定，那么问题转化为求 $n-1$ 位问题。但这 $n-1$ 位中第一位可能会与整个序列第一位发生合并。<strong>我们更希望出现的情况是</strong>第一位确定。故设 $p_{i,j}$ 为限制长度为 $i$，首位出现过 $j$ 的概率，即当该序列之前是 $j$ 时发生合并的概率，而在出现了 $j$ 前提下首位保持不变的概率为 $q_{i,j}$。如果第一位保持为 $j$，相当于有后 $i-1$ 位的首位未出现过 $j$，即 $q_{i,j}=1-p_{i-1,j}$。（$j=t$ 时特判，下文不再重复）</p>
 <p>当第一位出现了 $j$ 时，可能有两种情况：</p>
 <ol>
 <li>两个 $j-1$ 合并，即 $p_{i,j-1}\cdot p_{i-1,j-1}$</li>
@@ -894,92 +966,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lijinrui299792458.github.io/2021/10/02/%E6%95%B0%E8%AE%BA%EF%BC%881%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="lijinrui299792458">
-      <meta itemprop="description" content="落叶吹进深谷，歌声却没有归宿。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lijinrui299792458">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/02/%E6%95%B0%E8%AE%BA%EF%BC%881%EF%BC%89/" class="post-title-link" itemprop="url">数论（1）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-02 08:15:39" itemprop="dateCreated datePublished" datetime="2021-10-02T08:15:39+08:00">2021-10-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-04 11:11:37" itemprop="dateModified" datetime="2021-10-04T11:11:37+08:00">2021-10-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>若 $p$ 为质数，$a$ 不是 $p$ 的倍数，则 $a^{p-1}\equiv 1(\mod p)$</p>
-<p>证明：</p>
-<p>$0&lt;t&lt;p,ta$ 在 $\mod p$ 下互不相同，因为如果 $t\neq k,ta\equiv ka(\mod p),t\equiv k(\mod p)$</p>
-<p>故 $a^{p-1}(p-1)!\equiv(p-1)!(\mod p),a^{p-1}\equiv 1(\mod p)$</p>
-<h2 id="积性函数"><a href="#积性函数" class="headerlink" title="积性函数"></a>积性函数</h2><p>任意 $\gcd(m,n)=1$，有 $f(m)f(n)=f(mn)$，则 $f(x)$ 为积性函数。特殊地，若对任意 $m,n$ 都有 $f(m)f(n)=f(mn)$，则 $f(x)$ 为完全积性函数。</p>
-<p>注：常见的积性函数：</p>
-<ul>
-<li>$\epsilon(x)=[x=1]$</li>
-<li>$1(n)=1$</li>
-<li>$id_k(n)=n^k$</li>
-<li>$\sigma_k(n)=\sum_{d|n}d^k$</li>
-<li>$\varphi(n)$：一会要说的欧拉函数</li>
-<li>$\mu(n)$：以后会说的莫比乌斯函数</li>
-</ul>
-<h2 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/02/%E6%95%B0%E8%AE%BA%EF%BC%881%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1049,14 +1035,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
