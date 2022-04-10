@@ -51,22 +51,6 @@
       </tags>
   </entry>
   <entry>
-    <title>CF346D Robot Control</title>
-    <url>/2021/11/07/CF346D-Robot-Control/</url>
-    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><a href="https://www.luogu.com.cn/problem/CF346D">CF346D Robot Control</a></p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>可以想到，对于每一个节点，$dp[x]$ 表示其走到终点所需的最少指令数。考虑状态的转移：如果下指令，则 $dp[i]$ 为其出边所通向的点中的最小值加一。若不下指令则取最大值，两种情况取最小值。即，<br>$$<br>dp[x]=\min\{\min_{x\to y}\{dp[y]\}+1,\max_{x\to y}\{dp[y]\}\}<br>$$<br><strong>你能解决问题的一部分吗？</strong></p>
-<p>可以发现下指令的部分类似于一个边权为 $1$ 的最短路，尝试用 $BFS$ 解决。我们先对 $BFS$ 的过程进行一下概括，$BFS$ 时队列中的元素如下：</p>
-<p><img src="/2021/11/07/CF346D-Robot-Control/1.png" alt="pic1"></p>
-<p>可以发现，队列中元素（指 $dp$ 值）总是连续的 $n$ 和 $n+1$，且不降。在反图上 $BFS$，每次取队首元素进行更新，从队尾插入。</p>
-<p>再考虑不钦定前进方向的情况。（称“第二类”）</p>
-<p>枚举 $x$ 的所有出边（在原图上），如果发现指向的点的 $dp$ 值的最大值小于 $dp[x]$，则更新，同时在队首插入 $x$ 以保证单调性在 $x$ 出队时，如果 $x$ 能被第二类更新，显然它应该先被更新再更新别的点，这样不会在非最优值上浪费时间，而此时第二类更新 $x$ 的点一定已经被更新，因此 $x$ 一出队就对其更新，时间复杂度正确，而正确性显然。</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> inf 0x3f3f3f3f</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dp[<span class="number">1000001</span>],n,m,t[<span class="number">1000001</span>],tt[<span class="number">1000001</span>],S,T;</span><br><span class="line"><span class="keyword">bool</span> vis[<span class="number">1000001</span>];</span><br><span class="line"><span class="keyword">int</span> cnt1,cnt2;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">graph</span></span></span><br><span class="line"><span class="class">&#123;</span><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> to,nxt;</span><br><span class="line">&#125;edge[<span class="number">2000010</span>],egde[<span class="number">2000010</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> l,r;</span><br><span class="line"><span class="keyword">int</span> que[<span class="number">2000010</span>];</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> emp (l&gt;r)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> L que[l]</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pop vis[que[l++]]=0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pl(x) vis[x]=1,que[--l]=x</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pr(x) vis[x]=1,que[++r]=x</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> to1 edge[i].to</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> to2 egde[i].to</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	edge[++cnt1].to=u;</span><br><span class="line">	edge[cnt1].nxt=t[v];</span><br><span class="line">	t[v]=cnt1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	egde[++cnt2].to=u;</span><br><span class="line">	egde[cnt2].nxt=tt[v];</span><br><span class="line">	tt[v]=cnt2;</span><br><span class="line"><span class="comment">//	++deg[v];</span></span><br><span class="line">&#125;<span class="comment">//反图</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> 	<span class="meta">#<span class="meta-keyword">ifdef</span> usm</span></span><br><span class="line">	<span class="built_in">freopen</span>(<span class="string">&quot;input.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">	<span class="built_in">freopen</span>(<span class="string">&quot;output.out&quot;</span>,<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> u,v;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;u,&amp;v);</span><br><span class="line">		<span class="built_in">add</span>(u,v);</span><br><span class="line">		<span class="built_in">Add</span>(v,u);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;S,&amp;T);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">memset</span>(dp,<span class="number">0x3f</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(dp));</span><br><span class="line">	l=<span class="number">1000001</span>,r=<span class="number">1000000</span>;</span><br><span class="line">	dp[T]=<span class="number">0</span>;</span><br><span class="line">	que[++r]=T;</span><br><span class="line">	<span class="keyword">while</span>(!emp)<span class="comment">//BFS</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> _=L;</span><br><span class="line">		pop;</span><br><span class="line">		<span class="keyword">int</span> mx=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=t[_];i;i=edge[i].nxt)<span class="keyword">if</span>(dp[to1]&gt;mx)</span><br><span class="line">				mx=dp[to1];</span><br><span class="line">		<span class="keyword">if</span>(dp[_]&gt;mx)</span><br><span class="line">		&#123;</span><br><span class="line">			dp[_]=mx;</span><br><span class="line">			<span class="keyword">if</span>(!vis[_])<span class="built_in">pl</span>(_);</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=tt[_];i;i=egde[i].nxt)</span><br><span class="line">		<span class="keyword">if</span>(dp[_]+<span class="number">1</span>&lt;dp[to2])</span><br><span class="line">		&#123;</span><br><span class="line">			dp[to2]=dp[_]+<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(!vis[to2])</span><br><span class="line">				<span class="built_in">pr</span>(to2);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(dp[S]!=inf)<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,dp[S]);</span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>OI</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>NOI Online 2022 游记</title>
     <url>/2022/04/09/NOI-Online-2022-%E6%B8%B8%E8%AE%B0/</url>
     <content><![CDATA[<h2 id="T1-丹钓战"><a href="#T1-丹钓战" class="headerlink" title="T1 丹钓战"></a><a href="https://www.luogu.com.cn/problem/P8251">T1 丹钓战</a></h2><p>水题，直接单调栈（谐音梗）。</p>
@@ -100,6 +84,22 @@
       </tags>
   </entry>
   <entry>
+    <title>CF346D Robot Control</title>
+    <url>/2021/11/07/CF346D-Robot-Control/</url>
+    <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><a href="https://www.luogu.com.cn/problem/CF346D">CF346D Robot Control</a></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>可以想到，对于每一个节点，$dp[x]$ 表示其走到终点所需的最少指令数。考虑状态的转移：如果下指令，则 $dp[i]$ 为其出边所通向的点中的最小值加一。若不下指令则取最大值，两种情况取最小值。即，<br>$$<br>dp[x]=\min\{\min_{x\to y}\{dp[y]\}+1,\max_{x\to y}\{dp[y]\}\}<br>$$<br><strong>你能解决问题的一部分吗？</strong></p>
+<p>可以发现下指令的部分类似于一个边权为 $1$ 的最短路，尝试用 $BFS$ 解决。我们先对 $BFS$ 的过程进行一下概括，$BFS$ 时队列中的元素如下：</p>
+<p><img src="/2021/11/07/CF346D-Robot-Control/1.png" alt="pic1"></p>
+<p>可以发现，队列中元素（指 $dp$ 值）总是连续的 $n$ 和 $n+1$，且不降。在反图上 $BFS$，每次取队首元素进行更新，从队尾插入。</p>
+<p>再考虑不钦定前进方向的情况。（称“第二类”）</p>
+<p>枚举 $x$ 的所有出边（在原图上），如果发现指向的点的 $dp$ 值的最大值小于 $dp[x]$，则更新，同时在队首插入 $x$ 以保证单调性在 $x$ 出队时，如果 $x$ 能被第二类更新，显然它应该先被更新再更新别的点，这样不会在非最优值上浪费时间，而此时第二类更新 $x$ 的点一定已经被更新，因此 $x$ 一出队就对其更新，时间复杂度正确，而正确性显然。</p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> inf 0x3f3f3f3f</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dp[<span class="number">1000001</span>],n,m,t[<span class="number">1000001</span>],tt[<span class="number">1000001</span>],S,T;</span><br><span class="line"><span class="keyword">bool</span> vis[<span class="number">1000001</span>];</span><br><span class="line"><span class="keyword">int</span> cnt1,cnt2;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">graph</span></span></span><br><span class="line"><span class="class">&#123;</span><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> to,nxt;</span><br><span class="line">&#125;edge[<span class="number">2000010</span>],egde[<span class="number">2000010</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> l,r;</span><br><span class="line"><span class="keyword">int</span> que[<span class="number">2000010</span>];</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> emp (l&gt;r)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> L que[l]</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pop vis[que[l++]]=0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pl(x) vis[x]=1,que[--l]=x</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pr(x) vis[x]=1,que[++r]=x</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> to1 edge[i].to</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> to2 egde[i].to</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	edge[++cnt1].to=u;</span><br><span class="line">	edge[cnt1].nxt=t[v];</span><br><span class="line">	t[v]=cnt1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> v,<span class="keyword">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	egde[++cnt2].to=u;</span><br><span class="line">	egde[cnt2].nxt=tt[v];</span><br><span class="line">	tt[v]=cnt2;</span><br><span class="line"><span class="comment">//	++deg[v];</span></span><br><span class="line">&#125;<span class="comment">//反图</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> 	<span class="meta">#<span class="meta-keyword">ifdef</span> usm</span></span><br><span class="line">	<span class="built_in">freopen</span>(<span class="string">&quot;input.in&quot;</span>,<span class="string">&quot;r&quot;</span>,stdin);</span><br><span class="line">	<span class="built_in">freopen</span>(<span class="string">&quot;output.out&quot;</span>,<span class="string">&quot;w&quot;</span>,stdout);</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> u,v;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;u,&amp;v);</span><br><span class="line">		<span class="built_in">add</span>(u,v);</span><br><span class="line">		<span class="built_in">Add</span>(v,u);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;S,&amp;T);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">memset</span>(dp,<span class="number">0x3f</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(dp));</span><br><span class="line">	l=<span class="number">1000001</span>,r=<span class="number">1000000</span>;</span><br><span class="line">	dp[T]=<span class="number">0</span>;</span><br><span class="line">	que[++r]=T;</span><br><span class="line">	<span class="keyword">while</span>(!emp)<span class="comment">//BFS</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> _=L;</span><br><span class="line">		pop;</span><br><span class="line">		<span class="keyword">int</span> mx=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=t[_];i;i=edge[i].nxt)<span class="keyword">if</span>(dp[to1]&gt;mx)</span><br><span class="line">				mx=dp[to1];</span><br><span class="line">		<span class="keyword">if</span>(dp[_]&gt;mx)</span><br><span class="line">		&#123;</span><br><span class="line">			dp[_]=mx;</span><br><span class="line">			<span class="keyword">if</span>(!vis[_])<span class="built_in">pl</span>(_);</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=tt[_];i;i=egde[i].nxt)</span><br><span class="line">		<span class="keyword">if</span>(dp[_]+<span class="number">1</span>&lt;dp[to2])</span><br><span class="line">		&#123;</span><br><span class="line">			dp[to2]=dp[_]+<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(!vis[to2])</span><br><span class="line">				<span class="built_in">pr</span>(to2);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(dp[S]!=inf)<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,dp[S]);</span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>OI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>POI2014 HOT-Hotels 加强版</title>
     <url>/2022/04/09/POI2014-HOT-Hotels-%E5%8A%A0%E5%BC%BA%E7%89%88/</url>
     <content><![CDATA[<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><a href="https://www.luogu.com.cn/problem/P5904">P5904 POI2014 HOT-Hotels 加强版</a></p>
@@ -127,49 +127,6 @@
 ]]></content>
       <tags>
         <tag>OI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一天</title>
-    <url>/2021/11/07/%E4%B8%80%E5%A4%A9/</url>
-    <content><![CDATA[<p>清晨，太阳升起</p>
-<p>道一声再见</p>
-<p>我从沼泽出发</p>
-<p>坠入雾气弥漫的深渊</p>
-<hr>
-<p>夏日午后的阳光</p>
-<p>多么耀眼</p>
-<p>像来自永恒的昨天</p>
-<hr>
-<p>黄昏</p>
-<p>放一杯水在窗前</p>
-<p>看夕阳</p>
-<p>慢慢溶解</p>
-<hr>
-<p>灯光</p>
-<p>创造着夜</p>
-<p>又是平凡的一天</p>
-]]></content>
-      <tags>
-        <tag>poem</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>光影</title>
-    <url>/2021/10/31/%E5%85%89%E5%BD%B1/</url>
-    <content><![CDATA[<p>微笑的镰刀挥过，</p>
-<p>黎明却始终藏躲。</p>
-<p>欢乐</p>
-<p>是生命之火，</p>
-<p>还是自我的枷锁？</p>
-<p>战栗在光的阴影，</p>
-<p>罪行，空口无凭。</p>
-<p>燃烧</p>
-<p>为了光明，</p>
-<p>还是为了灰烬？</p>
-]]></content>
-      <tags>
-        <tag>poem</tag>
       </tags>
   </entry>
   <entry>
