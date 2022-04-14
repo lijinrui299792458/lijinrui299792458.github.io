@@ -181,6 +181,158 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lijinrui299792458.github.io/2022/04/14/%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95-%E7%9C%81%E9%80%892021A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lijinrui299792458">
+      <meta itemprop="description" content="落叶吹进深谷，歌声却没有归宿。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lijinrui299792458">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/14/%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95-%E7%9C%81%E9%80%892021A/" class="post-title-link" itemprop="url">做题记录-省选2021A</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-14 18:58:40 / 修改时间：21:54:00" itemprop="dateCreated datePublished" datetime="2022-04-14T18:58:40+08:00">2022-04-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="P7514-卡牌游戏"><a href="#P7514-卡牌游戏" class="headerlink" title="P7514 卡牌游戏"></a><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7514">P7514 卡牌游戏</a></h2><p>首先，翻面的一定是左边连续一段和右边连续一段。</p>
+<p>那么假设我都翻的右面，现在把翻的机会一个个移向左边。提前处理掉一定不会翻的卡牌，可以发现有两个区间：$[\min b_r,a_r]$ 和 $[a_l,\max b_l]$。前者用 <code>()</code>，后者用 <code>[]</code> 表示，<code>&#123;&#125;</code> 为下一个 <code>[]</code>，<code>&lt;&gt;</code> 是上一个。两个区间只会向左移。</p>
+<p>答案一定是下述情况：可翻卡牌数饱和；<code>)]&#125;</code>；<code>[(&#123;)]&#125;</code>；<code>&lt;([)&gt;]</code>；<code>[()]</code> 的最小值。除最后一种情况都可直接指针扫。而最后一种情况每次事实上是维护一段最值，每次从最前删除，最后加入，可维护一单调队列。</p>
+<p>非常笨拙然而是 $O(n)$ 的。</p>
+<h2 id="P7515-矩阵游戏"><a href="#P7515-矩阵游戏" class="headerlink" title="P7515 矩阵游戏"></a><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7515">P7515 矩阵游戏</a></h2><p>显然有 $n+m-1$ 个自由元，那就设在第一行和第一列。显然每一组自由元的取值唯一对应了一个矩阵。</p>
+<p>考虑两个矩阵，他们仅有一个自由元不同。为了保证其它自由元不变，矩阵的变化一定是：在该行或列的元素应依次 $+c,-c,+c,\cdots$。</p>
+<p>有一个例外：$a_{1,1}$。如果改变他，则所有的非自由元都会改变。为了统一我们修改第一行和第一列的所有元素。如果再对其他自由元修改使其回复原值，那么所造成的修改就是它应有的修改。</p>
+<p>那么钦定这些自由元是 0，求出矩阵原始值。然后进行一些操作：对某一行或某一列（特殊地，第一行和第一列由同一变量控制）进行上述操作。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/14/%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95-%E7%9C%81%E9%80%892021A/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lijinrui299792458.github.io/2022/04/12/CF700E-Cool-Slogans/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lijinrui299792458">
+      <meta itemprop="description" content="落叶吹进深谷，歌声却没有归宿。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lijinrui299792458">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/12/CF700E-Cool-Slogans/" class="post-title-link" itemprop="url">CF700E Cool Slogans</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-12 21:23:40" itemprop="dateCreated datePublished" datetime="2022-04-12T21:23:40+08:00">2022-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-14 16:37:19" itemprop="dateModified" datetime="2022-04-14T16:37:19+08:00">2022-04-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF700E">Link</a></p>
+<p>简意：定义字符串等级为出现在其中至少两次的最高等级的子串的等级 +1，空串等级为 0，求给定字符串的等级。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>首先，看到子串的问题，可以想到 SAM。然而任意子串的子串似乎还是不太好表示。在 SAM 上，我们通过边来连接前缀，用 fa 连接后缀。SAM <strong>将子串转化为前缀和后缀</strong>。那么类似地，我们对于某一个子串，先继承它前缀的答案，然后用它的后缀，即 Parent Tree 上的祖先来更新。</p>
+<p>在进一步的讨论之前，我们先来讨论一个问题：SAM 上一个节点表示了多个串，我们更新答案时肯定等级越大越好，所以我们存一个节点中最长子串的等级。然而这会不会影响“至少出现两次”？最长的子串没有出现两次，有没有可能有更短的子串出现两次？</p>
+<p>我们期望它没有影响。现在来尝试证明它：</p>
+<p>如果一个短串（非此节点中最长串）在一个串中两次出现，现在将这个短串向前拓展一位 endpos 一定不变，即任何一个位置上拓展都是可行的。那么如果这是长串的末尾，长串也一定可以拓展出去。</p>
+<p>那么我们只需维护每一个节点上最长串的等级。</p>
+<p>当我们计算一个节点的等级时，它一定不小于其前缀节点答案最大值。而我们再看它至少出现两次的后缀中等级的最大值，最后取最大值即可。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/12/CF700E-Cool-Slogans/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://lijinrui299792458.github.io/2022/04/09/POI2014-HOT-Hotels-%E5%8A%A0%E5%BC%BA%E7%89%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -821,171 +973,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lijinrui299792458.github.io/2021/10/24/%E6%95%B0%E8%AE%BA%EF%BC%882%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="lijinrui299792458">
-      <meta itemprop="description" content="落叶吹进深谷，歌声却没有归宿。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lijinrui299792458">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/24/%E6%95%B0%E8%AE%BA%EF%BC%882%EF%BC%89/" class="post-title-link" itemprop="url">数论（2）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-24 13:34:40" itemprop="dateCreated datePublished" datetime="2021-10-24T13:34:40+08:00">2021-10-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-31 13:09:52" itemprop="dateModified" datetime="2021-10-31T13:09:52+08:00">2021-10-31</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="欧拉定理的推广"><a href="#欧拉定理的推广" class="headerlink" title="欧拉定理的推广"></a>欧拉定理的推广</h2><p>欧拉定理要求 $\gcd(a,m)=1$，因此在 $a,m$ 不互质时无法直接使用。对于 $a,m$，若 $gcd(m,a)\ne 1$ 且 $x&gt;\varphi(m)$，有<br>$$<br>a^x\equiv a^{x\mod\varphi(m)+\varphi(m)}\mod m<br>$$<br>证明：<br>$$<br>m=\prod_{i=1}^{n}p_i^{q_i},a=s\prod_{i=1}^{n}p_i^{k_i},\gcd(s,m)=1<br>$$</p>
-<p>$$<br>即证:t\ge1,a^{t\varphi(m)}\equiv s^{t\varphi(m)}\prod_{i=1}^{n}p_i^{t\varphi(m)k_i}\equiv a^{\varphi(m)}\mod m<br>$$</p>
-<p>$$<br>对于 k_i=0,p_i^{t\varphi(m)k_i}\equiv1\mod m<br>$$</p>
-<p>$$<br>\varphi(m)\ge\varphi(p_i^{q_i})=p_i^{q_i-1}(p_i-1)\ge2^{q_i-1}\ge q_i<br>$$</p>
-<p>$$<br>p_i^{b\varphi(m)}\equiv1 \mod \left(\frac{m}{p_i^{q_i}}\right),p_i^{b\varphi(m)+q_i}\equiv p_i^{q_i}\mod m<br>$$</p>
-<p>$$<br>p_i^{(b+1)\varphi(m)}\equiv p_i^{\varphi(m)}\mod m<br>$$</p>
-<p>显然，原命题成立。</p>
-<h3 id="例"><a href="#例" class="headerlink" title="例"></a>例</h3><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4139">P4139 上帝与集合的正确用法</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/24/%E6%95%B0%E8%AE%BA%EF%BC%882%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lijinrui299792458.github.io/2021/10/02/%E6%95%B0%E8%AE%BA%EF%BC%881%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="lijinrui299792458">
-      <meta itemprop="description" content="落叶吹进深谷，歌声却没有归宿。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lijinrui299792458">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/02/%E6%95%B0%E8%AE%BA%EF%BC%881%EF%BC%89/" class="post-title-link" itemprop="url">数论（1）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-02 08:15:39" itemprop="dateCreated datePublished" datetime="2021-10-02T08:15:39+08:00">2021-10-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-04 11:11:37" itemprop="dateModified" datetime="2021-10-04T11:11:37+08:00">2021-10-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>若 $p$ 为质数，$a$ 不是 $p$ 的倍数，则 $a^{p-1}\equiv 1(\mod p)$</p>
-<p>证明：</p>
-<p>$0&lt;t&lt;p,ta$ 在 $\mod p$ 下互不相同，因为如果 $t\neq k,ta\equiv ka(\mod p),t\equiv k(\mod p)$</p>
-<p>故 $a^{p-1}(p-1)!\equiv(p-1)!(\mod p),a^{p-1}\equiv 1(\mod p)$</p>
-<h2 id="积性函数"><a href="#积性函数" class="headerlink" title="积性函数"></a>积性函数</h2><p>任意 $\gcd(m,n)=1$，有 $f(m)f(n)=f(mn)$，则 $f(x)$ 为积性函数。特殊地，若对任意 $m,n$ 都有 $f(m)f(n)=f(mn)$，则 $f(x)$ 为完全积性函数。</p>
-<p>注：常见的积性函数：</p>
-<ul>
-<li>$\epsilon(x)=[x=1]$</li>
-<li>$1(n)=1$</li>
-<li>$id_k(n)=n^k$</li>
-<li>$\sigma_k(n)=\sum_{d|n}d^k$</li>
-<li>$\varphi(n)$：一会要说的欧拉函数</li>
-<li>$\mu(n)$：以后会说的莫比乌斯函数</li>
-</ul>
-<h2 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/10/02/%E6%95%B0%E8%AE%BA%EF%BC%881%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1055,7 +1042,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
