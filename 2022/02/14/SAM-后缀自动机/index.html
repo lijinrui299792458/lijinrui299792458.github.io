@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lijinrui299792458.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="SAM如果在一个 $DAG$ 上表示一个字符串的所有子串，朴素的想法是将其所有后缀加入 $Trie$ 中，然而这样节点数是 $O(n^2)$ 的。可以发现，图中节点有很多可以合并之处。 首先是后缀本身。如果先不考虑后缀的公共前缀的存在，那么根本没有必要对每一个后缀都重新存储，可以直接用一条链表示原串，再从根指向各个节点，这样就合并了各后缀，因为只要跳过了开头的一段就可以得到一个后缀。这相当于是 $">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SAM 后缀自动机">
+<meta property="og:url" content="http://lijinrui299792458.github.io/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/index.html">
+<meta property="og:site_name" content="Lijinrui299792458">
+<meta property="og:description" content="SAM如果在一个 $DAG$ 上表示一个字符串的所有子串，朴素的想法是将其所有后缀加入 $Trie$ 中，然而这样节点数是 $O(n^2)$ 的。可以发现，图中节点有很多可以合并之处。 首先是后缀本身。如果先不考虑后缀的公共前缀的存在，那么根本没有必要对每一个后缀都重新存储，可以直接用一条链表示原串，再从根指向各个节点，这样就合并了各后缀，因为只要跳过了开头的一段就可以得到一个后缀。这相当于是 $">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://lijinrui299792458.github.io/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/1.png">
+<meta property="og:image" content="http://lijinrui299792458.github.io/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/2.png">
+<meta property="article:published_time" content="2022-02-14T03:39:03.000Z">
+<meta property="article:modified_time" content="2022-02-20T09:44:36.000Z">
+<meta property="article:author" content="lijinrui299792458">
+<meta property="article:tag" content="OI">
+<meta property="article:tag" content="字符串">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://lijinrui299792458.github.io/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/1.png">
+
+<link rel="canonical" href="http://lijinrui299792458.github.io/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SAM 后缀自动机 | Lijinrui299792458</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Lijinrui299792458" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Lijinrui299792458</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">检书烧烛短，看剑引杯长</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lijinrui299792458.github.io/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lijinrui299792458">
+      <meta itemprop="description" content="从此灯前有得失，不比酒后是文章">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lijinrui299792458">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SAM 后缀自动机
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-14 11:39:03" itemprop="dateCreated datePublished" datetime="2022-02-14T11:39:03+08:00">2022-02-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-20 17:44:36" itemprop="dateModified" datetime="2022-02-20T17:44:36+08:00">2022-02-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="SAM"><a href="#SAM" class="headerlink" title="SAM"></a>SAM</h2><p>如果在一个 $DAG$ 上表示一个字符串的所有子串，朴素的想法是将其所有后缀加入 $Trie$ 中，然而这样节点数是 $O(n^2)$ 的。可以发现，图中节点有很多可以合并之处。</p>
+<p>首先是后缀本身。如果先不考虑后缀的公共前缀的存在，那么根本没有必要对每一个后缀都重新存储，可以直接用一条链表示原串，再从根指向各个节点，这样就合并了各后缀，因为只要跳过了开头的一段就可以得到一个后缀。这相当于是 $Trie$ 是菊花图时，把那些后缀拉过来，强行与最长的后缀（即原串）合并，保留那些与根相连的边。图中原串为 <code>abc</code>。</p>
+<p><img src="/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/1.png"></p>
+<p>然而后缀可能存在公共的前缀，这使得 Trie 不是菊花图。这样按之前的做法，可能有一个子串出现多次。这不利于解决问题，不是我们想要的。因此 SAM 的一个限定条件是每一个子串都恰好出现一次。</p>
+<p>考虑之前做法的本质。由于新加入一个字符 <code>c</code> 时该字符从未出现过，因此增加的子串为所有原有后缀加上 <code>c</code> 和 <code>c</code> 本身，即新的后缀。但如果 <code>c</code> 之前已经出现过，就会出现某些后缀之前出现过，就不能这样加边了。</p>
+<p>现在假设我们建好了前 $n$ 个字符的 SAM，现在又加入了一个字符 <code>c</code>。首先一定会与之前的末尾字符连边，这样就有了整个串这个子串。此时新增添的子串一定是原有的能到达的后缀（即，这些后缀是在 SAM 中以到达末尾节点得到的子串，这个后缀除了在后缀的位置上外没有另外出现过）加上了 <code>c</code>，不可能在 SAM 中出现过，否则去掉这个字符一定也出现过。考虑那些之前出现过，但加上 <code>c</code> 后首次出现的后缀。</p>
+<p><strong>如果加入之后较大的后缀出现过，较小的后缀就一定也出现过了</strong>。因此从大到小考虑这些后缀（此处为原串后缀）。如果某个后缀对应的节点没有 <code>c</code> 的边就连边，否则就停止这一过程。</p>
+<p>那么如何考察这些后缀呢？</p>
+<p>由于每个子串至多对应一个节点，因此可以在每一个节点存储一个指向上一个子串节点的指针，其指向的节点所表示的子串为<strong>与当前节点子串由不同节点表示的后缀</strong>中最长的一个，而更短的后缀将递归得到。</p>
+<p>现在考虑不同子串由同一个子串表示的问题。如一开始的图，<code>&quot;c&quot;</code>，<code>&quot;bc&quot;</code>，<code>&quot;abc&quot;</code> 都由同一个节点表示。但这其实不是问题，而是我们优化的结果。如果两个子串所有出现位置的右端点相同，那么这两个子串的处理不会有区别。而也只有这样的两个子串才会由同一个节点表示。贯彻落实这样的优化精神，我们称一个串 $s$ 所有出现位置的右端点组成的集合为，$\texttt{endpos}(s)$，$\texttt{endpos}(s)$ 相同的子串由同意节点表示。</p>
+<h2 id="texttt-endpos"><a href="#texttt-endpos" class="headerlink" title="$\texttt{endpos}$"></a>$\texttt{endpos}$</h2><p>关于 $\texttt{endpos}$，我们不加证明地给出结论（其实证明很简单）：</p>
+<ol>
+<li>若 $\texttt{endpos}(s)=\texttt{endpos}(t),\text{len}(s)\le \text{len}(t)$，则 $s$ 是 $t$ 的后缀。</li>
+<li>对于 $s,t,\text{len}(s)\le \text{len}(t)$，有 $\texttt{endpos}(s)\in\texttt{endpos}(t)$ 或 $\texttt{endpos}(s)\cap\texttt{endpos}(t)=\emptyset$。</li>
+<li>$\texttt{endpos}$ 相同的子串组成一个 $\texttt{endpos}$ 等价类。一个等价类中的子串为一个串的连续的一些后缀。</li>
+<li>$\texttt{endpos}$ 等价类的数量为 $O(n)$。</li>
+</ol>
+<p>通过 $\texttt{endpos}$，我们将建立 $\texttt{Parent Tree}$。</p>
+<h2 id="texttt-Parent-Tree"><a href="#texttt-Parent-Tree" class="headerlink" title="$\texttt{Parent Tree}$"></a>$\texttt{Parent Tree}$</h2><p>在一个子串的开头添加字符。一开始可能一直在原等价类内，如果每一个节点表示一个 $\texttt{endpos}$ 等价类，那么此时还一直在同一个节点上。但某一时刻节点发生变化，令新的节点是原节点的儿子。容易发现，这样建立的 $\texttt{Parent Tree}$ 上，儿子节点的 $\texttt{endpos}$ 是其父亲节点的 $\texttt{endpos}$ 的不交子集。</p>
+<p>事实上，之前所说“<strong>与当前节点子串由不同节点表示的后缀</strong>中最长的一个”，就是在 $\texttt{Parent Tree}$ 上不断寻找父亲。</p>
+<h2 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h2><p>回到 SAM 的构造。</p>
+<p>加入一个字符 <code>c</code>，创建点 $o$，首先连之前结尾 <code>lst</code> 的边。接下来跳父亲直到有 <code>c</code> 的连边。</p>
+<p>如果没有父亲有边，那么遍历结束，新节点父亲为 <code>1</code>。</p>
+<p>如果遇到一个祖先有边，会发现一个问题。</p>
+<p>有可能原本 $\texttt{endpos}$ 相同的子串，在加入<code>c</code> 后 $\texttt{endpos}$ 不同了。比如 <code>abc</code>，加入 <code>c</code>，<code>c</code> 的 $\texttt{endpos}$ 不同了。</p>
+<p>先考虑这种情况没有发生：我们只需要令 $\text{fa}(o)$ 等于这个祖先节点的 <code>c</code> 边所通向的节点即可。</p>
+<p>下面考虑这种情况发生。</p>
+<p>如何判断这种情况的发生？为了方便，记所寻到的祖先节点为 $x$，$x$ 的 <code>c</code> 边通向 $y$。</p>
+<p>如果在这种情况发生，一定是 $y$ 所表示的一些子串是加入之后的后缀（称“合法”），<strong>一些子串不是（非法）</strong>。这些合法子串的长度都与 $x$ 以及其通向 $y$ 的祖先所表示的子串得长度 $+1$ 一一对应，而非法的子串就一定没有一个这样的子串与之对应。由 $\texttt{endpos}$ 的性质可知非法子串一定是最长的一些子串。因此我们只要知道是否（$\text{ml}(x)$ 表示 $x$ 的等价类中最长子串的长度） $\text{ml}(x)+1=\text{ml}(y)$ 即可。因此在每个节点维护 $\text{ml}$。</p>
+<p>现在加入之后，$y$ 点有两个等价类。因此新建一个节点 $t$，把那些 $\texttt{endpos}$ 增加了的拿出来（这些是那些合法子串，他们作为新串后缀出现了一次）。</p>
+<p>容易知道，$\text{ml}(t)=\text{ml}(x)+1,\text{fa}(t)=\text{fa}(y),\text{fa}(y)=t,\text{fa}(o)=t$。</p>
+<p>考虑边。首先考虑出边，虽然 $t$ 和 $y$ 的 $\texttt{endpos}$ 不同，但因为这两个节点的子串的 $\texttt{endpos}$ 差异只在原串的结尾处而这里不可能再向后拓展一个字符，在结尾加一个字符后肯定在一个等价类中，因此 $t$ 的出边只需继承 $y$ 即可。接下来考虑入边。发现 $x$ 的串为 $\texttt{endpos}$ 原非空而增加的最大的串，此时应该更改 $x$ 的串的后缀，因此跳 $x$ 的父亲。对于边 <code>c</code> 指向 $y$ 的点，改为让它指向 $t$。</p>
+<p>如果遇到了一个节点的边 <code>c</code> 不指向 $y$，那么它一定指向 $y$ 的祖先，而 $\text{fa}(y)=t$，因此之后再也不会出现这种情况了。（相当于出了 $t$ 的等价类就不用管了，因为更短的后缀，它的儿子节点已经处理过了，那么它也就跟着把 $\texttt{endpos}$ 更新了，因此只需把原来 $y$ 里的移到 $t$ 里去就行了）</p>
+<h2 id="模版题-amp-代码实现"><a href="#模版题-amp-代码实现" class="headerlink" title="模版题 &amp; 代码实现"></a>模版题 &amp; 代码实现</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3804">P3804 【模板】后缀自动机 (SAM)</a></p>
+<h3 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h3><p>即求 $\max_{x}(\text{sizeof}(\texttt{endpos}(x))\text{ml}(x))$。</p>
+<p>在 $\texttt{Parent Tree}$ 上 DFS，显然有 $\texttt{endpos}$ 等于所有儿子 $\texttt{endpos}$ 和本身如果是前缀前缀的结束位置之并。</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">SAM</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> ch[<span class="number">26</span>],fa,ml;<span class="type">bool</span> fl;</span><br><span class="line">&#125;sam[<span class="number">2000000</span>];<span class="type">int</span> tot,lst;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">buil</span><span class="params">(<span class="type">int</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> x=lst;lst=++tot;sam[lst].fl=<span class="number">1</span>;sam[lst].ml=sam[x].ml+<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>((x)&amp;&amp;(!sam[x].ch[c]))sam[x].ch[c]=lst,x=sam[x].fa;</span><br><span class="line">	<span class="keyword">if</span>(!x)<span class="comment">//case 1</span></span><br><span class="line">	&#123;</span><br><span class="line">		sam[lst].fa=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> y=sam[x].ch[c];</span><br><span class="line">	<span class="keyword">if</span>(sam[x].ml+<span class="number">1</span>==sam[y].ml)<span class="comment">//case 2</span></span><br><span class="line">	&#123;</span><br><span class="line">		sam[lst].fa=y;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	++tot;<span class="comment">//case 3</span></span><br><span class="line">	sam[tot]=sam[y],sam[tot].fl=<span class="number">0</span>;sam[tot].ml=sam[x].ml+<span class="number">1</span>;sam[y].fa=sam[lst].fa=tot;</span><br><span class="line">	<span class="keyword">while</span>((x)&amp;&amp;(sam[x].ch[c]==y))sam[x].ch[c]=tot,x=sam[x].fa;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">long</span> <span class="type">long</span> ans=<span class="number">0</span>;<span class="type">int</span> nxt[<span class="number">3000000</span>],to[<span class="number">3000000</span>],cnt,h[<span class="number">2000000</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ad</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	to[++cnt]=v;</span><br><span class="line">	nxt[cnt]=h[u];</span><br><span class="line">	h[u]=cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> ret=(sam[x].fl);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=h[x];i;i=nxt[i])</span><br><span class="line">	ret+=<span class="built_in">dfs</span>(to[i]);</span><br><span class="line">	<span class="keyword">if</span>(ret&gt;<span class="number">1</span>)ans=<span class="built_in">max</span>(ans,<span class="number">1LL</span>*ret*sam[x].ml);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">char</span> c;tot=lst=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>((c=<span class="built_in">getchar</span>())&gt;=<span class="string">&#x27;a&#x27;</span>&amp;&amp;c&lt;=<span class="string">&#x27;z&#x27;</span>)<span class="built_in">buil</span>(c-<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;=tot;i++)<span class="built_in">ad</span>(sam[i].fa,i);</span><br><span class="line">	<span class="built_in">dfs</span>(<span class="number">1</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>,ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h2><h3 id="点"><a href="#点" class="headerlink" title="点"></a>点</h3><p>由 $\texttt{endpos}$ 的数量可知为 $O(n)$。</p>
+<h3 id="边"><a href="#边" class="headerlink" title="边"></a>边</h3><p>首先建一个生成树，边数 $O(n)$。</p>
+<p>如果在自动机上跑遍所有子串必然遍历到所有边，但我们不需要这样做。考虑到所有的子串都一定是某个后缀的前缀，因此只需跑所有的后缀。</p>
+<p>我们从 <code>lst</code> 出发，逆向跑回 1 节点。</p>
+<p>而在跑每一个后缀的时候，如果发现走不通，就加一条应该走的边。注意到此时这条边所通向节点一定可以通向 1 节点（有树做基础），并且这样走由于经过了刚才新添加的边，因此一定产生新的后缀。由此可以发现，每加一条边，至少可以多一个后缀。因此边也是 $O(n)$ 的。</p>
+<h3 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h3><p>注意到其中两个 <code>while</code> 是时间复杂度不确定的原因。</p>
+<p>对于：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>((x)&amp;&amp;(!sam[x].ch[c]))sam[x].ch[c]=lst,x=sam[x].fa;</span><br></pre></td></tr></table></figure>
+
+<p>事实上是加边，因此是 $O(n)$ 的。</p>
+<p>而：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>((x)&amp;&amp;(sam[x].ch[c]==y))sam[x].ch[c]=tot,x=sam[x].fa;<span class="comment">//case 3</span></span><br></pre></td></tr></table></figure>
+
+<p>我们知道这句是将 $\texttt{endpos}(y)$ 中的串移到 $\texttt{endpos}(t)$ 中。</p>
+<p>如果这次 <code>case 3</code> 和上一次已经相互独立（指新建节点中的后缀的左端点的范围不交），那么转移的串数一定不多于这一段范围大小，因此 $O(n)$。</p>
+<p>否则，考虑上一次 <code>case 3</code>，考虑这两次修改的子串的共同范围：</p>
+<p><img src="/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/2.png"></p>
+<p>可以发现，重复范围内开头的后缀属于同一个 $\texttt{endpos}$（当时新建节点的 $\texttt{endpos}$ 通过特定路径到达的节点，因为此间未发生一个  $\texttt{endpos}$ 分裂），因此平均还是 $O(n)$ 的。</p>
+<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/0304397585901574">The smallest automation recognizing the subwords of a text - ScienceDirect</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/Kesdiael3/hou-zhui-zi-dong-ji-yang-xie">史上最通俗的后缀自动机详解 - KesdiaelKen 的博客</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lijinrui299792458
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://lijinrui299792458.github.io/2022/02/14/SAM-%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" title="SAM 后缀自动机">http://lijinrui299792458.github.io/2022/02/14/SAM-后缀自动机/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OI/" rel="tag"># OI</a>
+              <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag"># 字符串</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/13/%E5%BA%8F%E5%88%97%E5%90%88%E5%B9%B6/" rel="prev" title="序列合并">
+      <i class="fa fa-chevron-left"></i> 序列合并
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/06/%E6%A0%91%E4%B8%8A%E7%A7%BB%E5%8A%A8/" rel="next" title="树上移动">
+      树上移动 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SAM"><span class="nav-number">1.</span> <span class="nav-text">SAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#texttt-endpos"><span class="nav-number">2.</span> <span class="nav-text">$\texttt{endpos}$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#texttt-Parent-Tree"><span class="nav-number">3.</span> <span class="nav-text">$\texttt{Parent Tree}$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0"><span class="nav-number">4.</span> <span class="nav-text">构造</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E7%89%88%E9%A2%98-amp-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">模版题 &amp; 代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">5.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9A%E6%B3%95"><span class="nav-number">5.2.</span> <span class="nav-text">做法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code"><span class="nav-number">5.3.</span> <span class="nav-text">Code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">6.</span> <span class="nav-text">复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9"><span class="nav-number">6.1.</span> <span class="nav-text">点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9"><span class="nav-number">6.2.</span> <span class="nav-text">边</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4"><span class="nav-number">6.3.</span> <span class="nav-text">时间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">学习资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lijinrui299792458</p>
+  <div class="site-description" itemprop="description">从此灯前有得失，不比酒后是文章</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lijinrui299792458" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lijinrui299792458" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lijinrui299792458@qq.com" title="E-Mail → mailto:lijinrui299792458@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lijinrui299792458</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '222792e23f9b6f7ee44b',
+      clientSecret: '110eb25050907ef81a31c54a9410e32351ac078d',
+      repo        : 'comment',
+      owner       : 'lijinrui299792458',
+      admin       : ['lijinrui299792458'],
+      id          : 'e3bb8a52bc2a933e12054e09aa9a65fe',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
