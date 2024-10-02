@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"lijinrui299792458.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="FunctorsFunctor 中定义了 fmap 函数，其功能类似于列表的 map。 其定义如下： 12class Functor f where    fmap :: (a -&gt; b) -&gt; f a -&gt; f b  可以举几个例子： 列表： 123instance Functor [] where    -- fmap :: (a -&gt; b) -&gt; [a] -&amp;g">
+  <meta name="description" content="Functors我们首先定义 fmap 函数，其功能类似于列表的 map。 其定义如下： 12class Functor f where    fmap :: (a -&gt; b) -&gt; f a -&gt; f b  可以举几个例子： 列表： 123instance Functor [] where    -- fmap :: (a -&gt; b) -&gt; [a] -&gt; [b]">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Functor and Monad">
 <meta property="og:url" content="http://lijinrui299792458.github.io/2024/09/22/Functor-and-Monad/index.html">
 <meta property="og:site_name" content="Lijinrui299792458">
-<meta property="og:description" content="FunctorsFunctor 中定义了 fmap 函数，其功能类似于列表的 map。 其定义如下： 12class Functor f where    fmap :: (a -&gt; b) -&gt; f a -&gt; f b  可以举几个例子： 列表： 123instance Functor [] where    -- fmap :: (a -&gt; b) -&gt; [a] -&amp;g">
+<meta property="og:description" content="Functors我们首先定义 fmap 函数，其功能类似于列表的 map。 其定义如下： 12class Functor f where    fmap :: (a -&gt; b) -&gt; f a -&gt; f b  可以举几个例子： 列表： 123instance Functor [] where    -- fmap :: (a -&gt; b) -&gt; [a] -&gt; [b]">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-09-22T13:46:53.000Z">
-<meta property="article:modified_time" content="2024-09-28T14:30:05.742Z">
+<meta property="article:modified_time" content="2024-10-02T07:06:05.929Z">
 <meta property="article:author" content="lijinrui299792458">
 <meta property="article:tag" content="Haskell">
 <meta property="article:tag" content="FP">
@@ -222,7 +222,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-28 22:30:05" itemprop="dateModified" datetime="2024-09-28T22:30:05+08:00">2024-09-28</time>
+                <time title="修改时间：2024-10-02 15:06:05" itemprop="dateModified" datetime="2024-10-02T15:06:05+08:00">2024-10-02</time>
               </span>
 
           
@@ -236,7 +236,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Functors"><a href="#Functors" class="headerlink" title="Functors"></a>Functors</h2><p>Functor 中定义了 <code>fmap</code> 函数，其功能类似于列表的 <code>map</code>。</p>
+        <h2 id="Functors"><a href="#Functors" class="headerlink" title="Functors"></a>Functors</h2><p>我们首先定义 <code>fmap</code> 函数，其功能类似于列表的 <code>map</code>。</p>
 <p>其定义如下：</p>
 <figure class="highlight hs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="type">Functor</span> f <span class="keyword">where</span></span></span><br><span class="line">    fmap :: (a -&gt; b) -&gt; f a -&gt; f b</span><br></pre></td></tr></table></figure>
 
@@ -247,7 +247,7 @@
 <p><code>Maybe</code> 类型：</p>
 <figure class="highlight hs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">Maybe</span> <span class="keyword">where</span></span></span><br><span class="line">    fmap _ <span class="type">Nothing</span> = <span class="type">Nothing</span></span><br><span class="line">    fmap g (<span class="type">Just</span> x) = <span class="type">Just</span> (g x)</span><br></pre></td></tr></table></figure>
 
-<p>简单来说，<code>fmap</code> 就是对一个 Functor 类型的元素中的值进行统一的操作。</p>
+<p>简单来说，<code>fmap</code> 就是对一个 Functor 类型的元素中的值进行操作。</p>
 <p><code>fmap</code> 需满足以下条件：</p>
 <p>$$<br>\texttt{fmap id = id}<br>$$</p>
 <p>$$<br>\texttt{fmap (g . h) = fmap g . fmap h}<br>$$</p>
@@ -323,28 +323,46 @@
 <h3 id="Generic-function"><a href="#Generic-function" class="headerlink" title="Generic function"></a>Generic function</h3><p>我们现在在 Monad 上定义一些通用的函数。在 <code>Control.Monad</code> 中提供了此类函数的一些实现。</p>
 <figure class="highlight hs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">mapM</span> :: <span class="type">Monad</span> m =&gt; (a -&gt; m b) -&gt; [a] -&gt; m [b]</span><br><span class="line"><span class="title">mapM</span> f [] = return []</span><br><span class="line"><span class="title">mapM</span> f (x:xs) = <span class="keyword">do</span> y &lt;- f x</span><br><span class="line">    ys &lt;- mapM f xs</span><br><span class="line">    return (y:ys)</span><br><span class="line"></span><br><span class="line"><span class="title">join</span> :: <span class="type">Monad</span> m =&gt; m (m a) -&gt; m a</span><br><span class="line"><span class="title">join</span> mmx = <span class="keyword">do</span> mx &lt;- mmx        </span><br><span class="line">    x &lt;- mx</span><br><span class="line">    return x</span><br></pre></td></tr></table></figure>
 
-<h2 id="范畴论相关"><a href="#范畴论相关" class="headerlink" title="范畴论相关"></a>范畴论相关</h2><h3 id="范畴"><a href="#范畴" class="headerlink" title="范畴"></a>范畴</h3><p>一个范畴 $C$ 由如下资料构成：</p>
+<h2 id="范畴论相关"><a href="#范畴论相关" class="headerlink" title="范畴论相关"></a>范畴论相关</h2><p>我们现在探究 Functor 和 Monad 在范畴论以及在 Haskell 中的关系：</p>
+<h3 id="Functor"><a href="#Functor" class="headerlink" title="Functor"></a>Functor</h3><p>范畴论中的 Functor 是两个范畴间的关系，对于 $F:C\to D$，它包括：</p>
 <ul>
-<li><p>一类对象 $C_0$</p>
+<li><p>$\text{object-mapping }C_0\to D_0$</p>
 </li>
-<li><p>一类态射 $C_1$<br>（此处即是说， $C_0, C_1$ 都是类而不一定是集合，譬如 ${s \ |\ s \text{ is a set} }$）</p>
-</li>
-<li><p>态射上的两个操作 $\text{domain}$ 和 $\text{codomain}$ ，分别将一个态射 $f$ 对应到 $C_0$ 中的一个对象 $\text{dom} f$ 和 $\text{cod} f$</p>
-</li>
-<li><p>$\text{identity}$ 操作：对任意 $a\in C_0$，定义 $f_{a\to a}\in C$，记为 $1_a$</p>
-</li>
-<li><p>$\text{composition}$ 操作：$f_{a\to b},g_{b\to c}\in C_1$，定义 $h_{a\to c} = g\circ f$</p>
+<li><p>$\text{morphism-mapping operation }f_{c\to c’}\to g_{F \ c\to F\ c’}$</p>
 </li>
 </ul>
-<p>满足如下公理：</p>
+<p>并满足以下条件：</p>
 <ul>
-<li><p>$f\circ1_a=f=1_b\circ f,\forall f_{a\to b}$</p>
+<li><p>$F\ 1_c = 1_{F \ c}$</p>
 </li>
-<li><p>$f\circ(g\circ h)=(f\circ g)\circ h$</p>
+<li><p>$F\ (g \circ f)=F\ g \circ F \ f$</p>
 </li>
 </ul>
-<h3 id="Functor"><a href="#Functor" class="headerlink" title="Functor"></a>Functor</h3><p>未完待续</p>
+<p>这很显然与 Haskell 中 Functor 的条件是一样的；事实上，Haskell 中定义的 Functor 的实例 $\texttt{f}$ 即是 $\text{object-mapping}$，$\texttt{fmap}$ 即是 $\text{morphism-mapping operation}$</p>
+<h3 id="Kleisli-Category-and-Monad"><a href="#Kleisli-Category-and-Monad" class="headerlink" title="Kleisli Category and Monad"></a>Kleisli Category and Monad</h3><p>对于一个范畴 $C$ 及其自函子 $m:C\to C$，定义其对应的 Kleisli Category $K$：</p>
+<ol>
+<li><p>$K_0\doteq C_0$</p>
+</li>
+<li><p>$K_0\doteq {f_{a\to b}\ |\ f’_{a\to m \ b}\in C_1}$</p>
+</li>
+<li><p>$\text{dom }f_{a\to b}\doteq a, \text{cod }f_{a\to b}\doteq b$</p>
+</li>
+<li><p>$1_a\doteq\text{return}_{a\to m \ a}\in C_1$</p>
+</li>
+<li><p>$g_{b\to c}\circ f_{a\to b}\doteq f’<em>{a \to m \ b}\rightarrowtail g’</em>{b\to m \ c} = h’_{a\to m\ c}$</p>
+</li>
+</ol>
+<p>条件：</p>
+<ul>
+<li>$\bold{Unit:\ }f\circ1=f=1\circ f$</li>
+<li>$\bold{Associativity:\ }h\circ(g\circ f)=(h\circ g)\circ f$</li>
+</ul>
+<p>那么我们称 $m$ 为 Monad。那么我们可以如下定义 Monad:</p>
+<figure class="highlight hs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="type">Monad</span> m <span class="keyword">where</span></span></span><br><span class="line">    (&gt;=&gt;) :: (a -&gt; m b) -&gt; (b -&gt; m c) -&gt; (a -&gt; m c)</span><br><span class="line">    return :: a -&gt; m a</span><br></pre></td></tr></table></figure>
 
+<p>其中 <code>&gt;=&gt;</code> 运算符即是上述定义中的 $\rightarrowtail$。</p>
+<p>当然，我们还可以进一步简化上述定义，比如前面介绍的 Haskell 中的 Monad 实践。</p>
+<h1 id><a href="#" class="headerlink" title></a></h1>
     </div>
 
     
@@ -443,7 +461,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Functors"><span class="nav-number">1.</span> <span class="nav-text">Functors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Applicatives"><span class="nav-number">2.</span> <span class="nav-text">Applicatives</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Monads"><span class="nav-number">3.</span> <span class="nav-text">Monads</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Monad-laws"><span class="nav-number">3.2.</span> <span class="nav-text">Monad laws</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#State-monad"><span class="nav-number">3.3.</span> <span class="nav-text">State monad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-Relabelling-trees"><span class="nav-number">3.4.</span> <span class="nav-text">Example: Relabelling trees</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generic-function"><span class="nav-number">3.5.</span> <span class="nav-text">Generic function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E7%95%B4%E8%AE%BA%E7%9B%B8%E5%85%B3"><span class="nav-number">4.</span> <span class="nav-text">范畴论相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8C%83%E7%95%B4"><span class="nav-number">4.1.</span> <span class="nav-text">范畴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Functor"><span class="nav-number">4.2.</span> <span class="nav-text">Functor</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Functors"><span class="nav-number">1.</span> <span class="nav-text">Functors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Applicatives"><span class="nav-number">2.</span> <span class="nav-text">Applicatives</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Monads"><span class="nav-number">3.</span> <span class="nav-text">Monads</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Monad-laws"><span class="nav-number">3.2.</span> <span class="nav-text">Monad laws</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#State-monad"><span class="nav-number">3.3.</span> <span class="nav-text">State monad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-Relabelling-trees"><span class="nav-number">3.4.</span> <span class="nav-text">Example: Relabelling trees</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generic-function"><span class="nav-number">3.5.</span> <span class="nav-text">Generic function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8C%83%E7%95%B4%E8%AE%BA%E7%9B%B8%E5%85%B3"><span class="nav-number">4.</span> <span class="nav-text">范畴论相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Functor"><span class="nav-number">4.1.</span> <span class="nav-text">Functor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kleisli-Category-and-Monad"><span class="nav-number">4.2.</span> <span class="nav-text">Kleisli Category and Monad</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a></div>
       </div>
       <!--/noindex-->
 
